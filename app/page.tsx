@@ -83,30 +83,68 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#f9f8f6]">
       {/* Hero Section */}
-      <section className="pt-20 pb-16 md:pt-32 md:pb-24">
+      <section className="relative pt-6 pb-16 md:pt-12 md:pb-24 bg-white">
         <div className="mx-auto max-w-5xl px-4 md:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <div className="flex justify-center mb-6">
-              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#fbe8de] text-[#d97759] shadow-sm">
-                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.072 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.072 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.072-3.292a1 1 0 00-.364-1.118L4.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
-              </span>
+            {/* SVG Pattern Background */}
+            <div className="flex justify-center">
+              <svg className="w-full max-w-4xl h-64 md:h-80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                  {/* Repeating pattern - 3 different card styles in one horizontal tile */}
+                  <pattern id="consistentPattern" x="0" y="0" width="660" height="300" patternUnits="userSpaceOnUse">
+                    {/* Style 1: circle-focused card */}
+                    <g opacity="0.2">
+                      <rect x="40" y="40" width="160" height="160" rx="28" fill="none" stroke="#d97759" strokeWidth="1.2" />
+                      <circle cx="120" cy="120" r="44" fill="none" stroke="#d97759" strokeWidth="1.1" opacity="0.8" />
+                    </g>
+
+                    {/* Style 2: split card */}
+                    <g opacity="0.17">
+                      <rect x="250" y="40" width="160" height="160" rx="28" fill="none" stroke="#d97759" strokeWidth="1.2" />
+                      <line x1="250" y1="120" x2="410" y2="120" stroke="#d97759" strokeWidth="1" opacity="0.7" />
+                      <circle cx="330" cy="85" r="26" fill="none" stroke="#d97759" strokeWidth="1" opacity="0.7" />
+                    </g>
+
+                    {/* Style 3: diagonal accent card */}
+                    <g opacity="0.17">
+                      <rect x="460" y="40" width="160" height="160" rx="28" fill="none" stroke="#d97759" strokeWidth="1.2" />
+                      <line x1="475" y1="65" x2="615" y2="175" stroke="#d97759" strokeWidth="1" opacity="0.7" />
+                      <circle cx="490" cy="60" r="6" fill="#d97759" opacity="0.5" />
+                      <circle cx="610" cy="180" r="6" fill="#d97759" opacity="0.3" />
+                    </g>
+
+                    {/* Shared soft baseline under all cards */}
+                    <line
+                      x1="50"
+                      y1="230"
+                      x2="640"
+                      y2="230"
+                      stroke="#d97759"
+                      strokeWidth="0.9"
+                      opacity="0.06"
+                    />
+                  </pattern>
+                </defs>
+                
+                {/* Apply pattern across entire SVG */}
+                <rect width="1000" height="300" fill="url(#consistentPattern)" />
+              </svg>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-neutral-900 mb-4 leading-tight">
-              Turn Your Ideas Into
-              <span className="block text-[#d97759]">Stunning Canvas Art</span>
-            </h1>
-            <p className="text-base md:text-lg text-neutral-600 max-w-2xl mx-auto">
-              Generate with AI or upload your own image. Transform any vision into
-              <span className="font-semibold text-neutral-900"> gallery-quality canvas prints</span> in minutes.
-            </p>
+
+            {/* Hero text overlapping SVG a bit deeper using negative margin */}
+            <div className="-mt-24 md:-mt-28 px-4 md:px-6 lg:px-8">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-neutral-900 mb-4 leading-tight drop-shadow-sm">
+                Turn Your Ideas Into
+                <span className="block text-[#d97759]">Stunning Canvas Art</span>
+              </h1>
+              <p className="text-base md:text-lg text-neutral-600 max-w-2xl mx-auto drop-shadow-sm">
+                Generate with AI or upload your own image. Transform any vision into
+                <span className="font-semibold text-neutral-900"> gallery-quality canvas prints</span> in minutes.
+              </p>
+            </div>
           </div>
 
           <div className="relative bg-white rounded-2xl md:rounded-3xl border border-neutral-200 p-4 md:p-6 lg:p-8 shadow-sm">
-            {/* Decorative gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-[#d97759]/5 via-transparent to-transparent rounded-3xl pointer-events-none"></div>
-            
             {/* Tabs */}
             <div className="relative flex gap-1 md:gap-2 mb-6 md:mb-8 p-1 bg-neutral-100/80 rounded-xl w-full md:w-fit border border-neutral-200">
               <button
