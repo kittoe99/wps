@@ -92,7 +92,7 @@ export default function Header() {
             >
               <button 
                 onClick={() => setProductsOpen(!productsOpen)} 
-                className="text-sm font-medium text-neutral-600 hover:text-neutral-900 transition-colors flex items-center gap-1"
+                className="text-sm font-medium text-[#d97759] hover:text-[#c46a4f] transition-colors flex items-center gap-1"
               >
                 Products
                 <svg className={`w-4 h-4 transition-transform ${productsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
@@ -128,7 +128,7 @@ export default function Header() {
             </div>
             <Link 
               href="/contact" 
-              className="text-sm font-medium text-neutral-600 hover:text-neutral-900 transition-colors"
+              className="text-sm font-medium text-[#d97759] hover:text-[#c46a4f] transition-colors"
             >
               Contact
             </Link>
@@ -156,7 +156,7 @@ export default function Header() {
           <div className="hidden md:flex items-center gap-4 flex-shrink-0">
             <Link 
               href="/login"
-              className="text-sm font-medium text-neutral-600 hover:text-neutral-900 transition-colors"
+              className="text-sm font-medium text-[#d97759] hover:text-[#c46a4f] transition-colors"
             >
               Sign in
             </Link>

@@ -266,7 +266,7 @@ export default function Home() {
                       <h4 className="text-sm font-semibold text-neutral-900 mb-0.5">Quick start ideas</h4>
                       <p className="text-xs text-neutral-500">Click any prompt to get started instantly</p>
                     </div>
-                    <div className="hidden md:flex items-center gap-2">
+                    <div className="flex items-center gap-2">
                       <button
                         type="button"
                         onClick={() => scrollQuickIdeas('left')}
