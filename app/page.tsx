@@ -8,7 +8,7 @@ export default function Home() {
   const [prompt, setPrompt] = useState('')
   const [uploadedFile, setUploadedFile] = useState<File | null>(null)
   const [showResults, setShowResults] = useState(false)
-  const [selectedImage, setSelectedImage] = useState(0)
+  const [selectedImages, setSelectedImages] = useState<number[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [revealedImages, setRevealedImages] = useState<number[]>([])
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -79,7 +79,7 @@ export default function Home() {
     
     setIsLoading(true)
     setShowResults(true)
-    setSelectedImage(0)
+    // Keep selectedImages intact - don't clear them
     setRevealedImages([])
     
     // Simulate 5+ second loading time, then reveal images with stagger
@@ -98,6 +98,17 @@ export default function Home() {
     setShowResults(false)
     setIsLoading(false)
     setRevealedImages([])
+    setSelectedImages([])
+  }
+
+  const toggleImageSelection = (index: number) => {
+    setSelectedImages(prev => {
+      if (prev.includes(index)) {
+        return prev.filter(i => i !== index)
+      } else {
+        return [...prev, index]
+      }
+    })
   }
 
   const triggerFileUpload = () => {
@@ -250,57 +261,68 @@ export default function Home() {
                 
                 {/* Quick Prompts */}
                 <div className="relative">
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="text-xs font-medium text-neutral-500 flex items-center gap-1.5">
-                      <span className="h-1 w-1 rounded-full bg-[#d97759]" />
-                      Quick start ideas
-                    </p>
-                    <div className="hidden md:flex items-center gap-1 text-neutral-500">
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h4 className="text-sm font-semibold text-neutral-900 mb-0.5">Quick start ideas</h4>
+                      <p className="text-xs text-neutral-500">Click any prompt to get started instantly</p>
+                    </div>
+                    <div className="hidden md:flex items-center gap-2">
                       <button
                         type="button"
                         onClick={() => scrollQuickIdeas('left')}
-                        className="h-7 w-7 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:bg-neutral-50 text-xs"
+                        className="h-8 w-8 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:bg-neutral-50 hover:border-[#d97759] transition-all"
                         aria-label="Scroll ideas left"
                       >
-                        
+                        <svg className="w-4 h-4 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                        </svg>
                       </button>
                       <button
                         type="button"
                         onClick={() => scrollQuickIdeas('right')}
-                        className="h-7 w-7 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:bg-neutral-50 text-xs"
+                        className="h-8 w-8 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:bg-neutral-50 hover:border-[#d97759] transition-all"
                         aria-label="Scroll ideas right"
                       >
-                        
+                        <svg className="w-4 h-4 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                        </svg>
                       </button>
                     </div>
                   </div>
                   <div
                     ref={quickIdeasRef}
-                    className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory"
+                    className="flex gap-4 overflow-x-auto pb-3 scrollbar-hide snap-x snap-mandatory"
                   >
                     {promptExamples.map((example) => (
-                      <div
+                      <button
                         key={example.label}
-                        className="flex-shrink-0 snap-start w-32 md:w-40"
+                        type="button"
+                        onClick={() => setPrompt(example.label)}
+                        className="group flex-shrink-0 snap-start w-44 md:w-52 text-left"
                       >
-                        <button
-                          type="button"
-                          onClick={() => setPrompt(example.label)}
-                          className="w-full px-3.5 py-1.5 text-xs md:text-sm font-medium rounded-full border border-neutral-200 bg-neutral-50 text-neutral-700 hover:border-[#d97759] hover:bg-[#fff3ec] transition-colors duration-200 whitespace-nowrap overflow-hidden text-ellipsis"
-                        >
-                          {example.label}
-                        </button>
-                        <div className="mt-2 rounded-xl border border-neutral-200 overflow-hidden bg-neutral-100">
+                        <div className="relative rounded-xl overflow-hidden bg-neutral-100 border border-neutral-200 group-hover:border-[#d97759] transition-all duration-300 shadow-sm group-hover:shadow-md">
                           <div className="relative aspect-[4/3]">
                             <Image
                               src={example.image}
                               alt={example.label}
                               fill
-                              className="object-cover"
+                              className="object-cover group-hover:scale-105 transition-transform duration-300"
                             />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                          </div>
+                          <div className="absolute bottom-0 left-0 right-0 p-3 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <div className="flex items-center gap-1.5 text-xs font-semibold">
+                              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                              </svg>
+                              Try this prompt
+                            </div>
                           </div>
                         </div>
-                      </div>
+                        <p className="mt-2 text-xs md:text-sm font-medium text-neutral-700 group-hover:text-[#d97759] transition-colors line-clamp-2">
+                          {example.label}
+                        </p>
+                      </button>
                     ))}
                   </div>
                 </div>
@@ -435,14 +457,15 @@ export default function Home() {
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
                     {generatedImages.map((image, index) => {
                       const isRevealed = revealedImages.includes(index)
+                      const isSelected = selectedImages.includes(index)
                       return (
                         <button
                           key={`${image.label}-${index}`}
-                          onClick={() => setSelectedImage(index)}
+                          onClick={() => toggleImageSelection(index)}
                           className={`relative aspect-square rounded-2xl overflow-hidden transition-all duration-500 ${
                             isRevealed ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
                           } ${
-                            selectedImage === index 
+                            isSelected
                               ? 'ring-4 ring-[#d97759] shadow-xl' 
                               : 'ring-1 ring-neutral-200 hover:ring-2 hover:ring-neutral-300 hover:scale-[0.99] shadow-md'
                           }`}
@@ -453,7 +476,7 @@ export default function Home() {
                             fill 
                             className="object-cover" 
                           />
-                          {selectedImage === index && (
+                          {isSelected && (
                             <div className="absolute inset-0 bg-[#d97759]/10 flex items-center justify-center">
                               <div className="h-8 w-8 rounded-full bg-[#d97759] flex items-center justify-center shadow-lg">
                                 <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -466,44 +489,92 @@ export default function Home() {
                       )
                     })}
                   </div>
-
-                  <div className="flex flex-col sm:flex-row justify-center items-center gap-3 pt-4">
-                    <button 
-                      onClick={generateImage}
-                      className="px-6 py-3 rounded-xl border border-neutral-200 text-neutral-700 font-semibold hover:bg-neutral-50 transition-all"
-                    >
-                      Generate More
-                    </button>
-                    <button className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#d97759] to-[#c46a4f] text-white font-semibold shadow-md hover:shadow-lg transition-all">
-                      Continue with Selection
-                    </button>
-                  </div>
                 </>
               )}
             </div>
           )}
 
-          {showResults && (
-            <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-3xl px-4">
-              <div className="relative group">
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-[#d97759] to-[#c46a4f] rounded-2xl opacity-0 group-focus-within:opacity-20 blur transition duration-300"></div>
-                <textarea
-                  value={prompt}
-                  onChange={(e) => setPrompt(e.target.value)}
-                  placeholder="Refine your prompt or try a new one..."
-                  rows={2}
-                  className="relative w-full px-5 py-4 bg-white border border-neutral-200 rounded-2xl text-neutral-900 placeholder-neutral-400 focus:outline-none focus:border-[#d97759] focus:ring-2 focus:ring-[#d97759]/10 resize-none transition-all duration-300 text-base shadow-xl"
-                ></textarea>
-                <button
-                  onClick={generateImage}
-                  disabled={!prompt.trim()}
-                  className="absolute right-3 bottom-3 px-4 py-2 rounded-xl bg-gradient-to-r from-[#d97759] to-[#c46a4f] text-white font-semibold hover:shadow-lg hover:shadow-[#d97759]/30 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none transition-all duration-300 flex items-center gap-2 text-sm"
-                >
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                  </svg>
-                  Generate
-                </button>
+          {showResults && !isLoading && (
+            <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-5xl px-4">
+              <div className="relative bg-white rounded-2xl border border-neutral-200 shadow-2xl p-4">
+                <div className="flex flex-col lg:flex-row gap-4 items-stretch">
+                  {/* Selected images preview or prompt input */}
+                  <div className="flex-1 relative">
+                    {selectedImages.length > 0 ? (
+                      <div className="p-3 bg-neutral-50 border border-neutral-200 rounded-xl">
+                        <div className="flex items-center justify-between mb-3">
+                          <div>
+                            <p className="text-xs font-semibold text-[#d97759] uppercase tracking-wide">Selected Canvases</p>
+                            <p className="text-xs text-neutral-500 mt-0.5">{selectedImages.length} {selectedImages.length === 1 ? 'canvas' : 'canvases'} selected</p>
+                          </div>
+                          <button
+                            onClick={() => setSelectedImages([])}
+                            className="p-2 hover:bg-neutral-200 rounded-lg transition-colors flex-shrink-0"
+                            aria-label="Clear all selections"
+                          >
+                            <svg className="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                          </button>
+                        </div>
+                        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+                          {selectedImages.map((imgIndex) => (
+                            <div key={imgIndex} className="relative flex-shrink-0">
+                              <div className="relative w-16 h-16 rounded-lg overflow-hidden border-2 border-[#d97759]">
+                                <Image
+                                  src={generatedImages[imgIndex].src}
+                                  alt={generatedImages[imgIndex].label}
+                                  fill
+                                  className="object-cover"
+                                />
+                              </div>
+                              <button
+                                onClick={() => toggleImageSelection(imgIndex)}
+                                className="absolute -top-1 -right-1 w-5 h-5 bg-neutral-900 text-white rounded-full flex items-center justify-center hover:bg-neutral-700 transition-colors"
+                                aria-label="Remove from selection"
+                              >
+                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3">
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="relative group">
+                        <div className="absolute -inset-0.5 bg-gradient-to-r from-[#d97759] to-[#c46a4f] rounded-xl opacity-0 group-focus-within:opacity-20 blur transition duration-300"></div>
+                        <textarea
+                          value={prompt}
+                          onChange={(e) => setPrompt(e.target.value)}
+                          placeholder="Refine your prompt or try a new one..."
+                          rows={2}
+                          className="relative w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl text-neutral-900 placeholder-neutral-400 focus:outline-none focus:border-[#d97759] focus:ring-2 focus:ring-[#d97759]/10 resize-none transition-all duration-300 text-sm"
+                        ></textarea>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Action buttons */}
+                  <div className="flex flex-row lg:flex-col gap-2 lg:min-w-[180px]">
+                    <button
+                      onClick={generateImage}
+                      disabled={!prompt.trim()}
+                      className="flex-1 lg:flex-none px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#d97759] to-[#c46a4f] text-white font-semibold hover:shadow-lg hover:shadow-[#d97759]/30 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none transition-all duration-300 flex items-center justify-center gap-2 text-sm"
+                    >
+                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                      </svg>
+                      Generate More
+                    </button>
+                    <button className="flex-1 lg:flex-none px-4 py-2.5 rounded-xl border-2 border-[#d97759] text-[#d97759] font-semibold hover:bg-[#d97759] hover:text-white transition-all duration-300 flex items-center justify-center gap-2 text-sm">
+                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
+                      </svg>
+                      Continue
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           )}
