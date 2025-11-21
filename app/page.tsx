@@ -585,6 +585,14 @@ export default function Home() {
               <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
                 {/* Header with gradient background */}
                 <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#fff3ec] via-white to-neutral-50 border border-neutral-200 p-8 md:p-12 mb-12">
+                  <div
+                    className="absolute inset-0 opacity-20"
+                    style={{
+                      backgroundImage: "url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80')",
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center'
+                    }}
+                  />
                   <div className="absolute top-0 right-0 w-64 h-64 bg-[#d97759]/5 rounded-full blur-3xl"></div>
                   <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#d97759]/5 rounded-full blur-3xl"></div>
                   
