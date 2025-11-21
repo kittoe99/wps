@@ -88,25 +88,25 @@ export default function Home() {
           <div className="text-center mb-12">
             {/* SVG Pattern Background */}
             <div className="flex justify-center">
-              <svg className="w-full max-w-4xl h-80 md:h-80 lg:h-96" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" preserveAspectRatio="xMidYMid meet">
+              <svg className="w-full max-w-4xl h-[28rem] md:h-80 lg:h-[28rem]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" preserveAspectRatio="xMidYMid meet">
                 <defs>
                   {/* Repeating pattern - 3 different card styles in one horizontal tile */}
                   <pattern id="consistentPattern" x="0" y="0" width="660" height="300" patternUnits="userSpaceOnUse">
                     {/* Style 1: circle-focused card (warm orange) */}
-                    <g opacity="0.18">
+                    <g opacity="0.32">
                       <rect x="40" y="40" width="160" height="160" rx="28" fill="none" stroke="#f97316" strokeWidth="1.2" />
                       <circle cx="120" cy="120" r="44" fill="none" stroke="#fdba74" strokeWidth="1.1" opacity="0.85" />
                     </g>
 
                     {/* Style 2: split card (soft coral) */}
-                    <g opacity="0.16">
+                    <g opacity="0.28">
                       <rect x="250" y="40" width="160" height="160" rx="28" fill="none" stroke="#fb923c" strokeWidth="1.2" />
                       <line x1="250" y1="120" x2="410" y2="120" stroke="#fed7aa" strokeWidth="1" opacity="0.9" />
                       <circle cx="330" cy="85" r="26" fill="none" stroke="#fb923c" strokeWidth="1" opacity="0.8" />
                     </g>
 
                     {/* Style 3: diagonal accent card (peach) */}
-                    <g opacity="0.16">
+                    <g opacity="0.28">
                       <rect x="460" y="40" width="160" height="160" rx="28" fill="none" stroke="#fdba74" strokeWidth="1.2" />
                       <line x1="475" y1="65" x2="615" y2="175" stroke="#fb923c" strokeWidth="1" opacity="0.8" />
                       <circle cx="490" cy="60" r="6" fill="#f97316" opacity="0.6" />
@@ -121,7 +121,7 @@ export default function Home() {
                       y2="230"
                       stroke="#fdba74"
                       strokeWidth="0.9"
-                      opacity="0.05"
+                      opacity="0.16"
                     />
                   </pattern>
                 </defs>
