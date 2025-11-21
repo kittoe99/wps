@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# WPS Canvas - AI-Powered Canvas Printing
 
-## Getting Started
+A modern, beautiful Next.js application for creating and ordering custom canvas prints. Generate stunning artwork with AI or upload your own images to transform them into gallery-quality canvas prints.
 
-First, run the development server:
+## ✨ Features
+
+- 🎨 **AI-Powered Generation** - Create unique artwork using AI prompts
+- 📤 **Image Upload** - Upload your own images with drag-and-drop support
+- 🖼️ **Canvas Showcase** - Browse stunning examples of canvas prints
+- 📱 **Fully Responsive** - Beautiful design on all devices
+- ⚡ **Modern UI/UX** - Smooth animations, gradients, and interactive elements
+- 🎯 **Premium Quality** - Gallery-quality canvas printing
+
+## 🚀 Getting Started
+
+First, install the dependencies:
+
+```bash
+npm install
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Framework:** Next.js 16 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **UI Components:** Custom React components
+- **Images:** Next.js Image optimization
+- **Fonts:** Geist Sans & Geist Mono
 
-## Learn More
+## 📁 Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+wps-canvas-nextjs/
+├── app/
+│   ├── globals.css          # Global styles and animations
+│   ├── layout.tsx           # Root layout with Header/Footer
+│   └── page.tsx             # Homepage with canvas creation
+├── components/
+│   ├── Header.tsx           # Navigation header with animated logo
+│   └── Footer.tsx           # Footer with links and social icons
+├── public/
+│   └── wps-canvas.png       # Logo and assets
+└── next.config.ts           # Next.js configuration
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🎨 Design Features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Gradient Backgrounds** - Beautiful gradient overlays and animated orbs
+- **3D Effects** - Depth and shadow effects on canvas frames
+- **Smooth Animations** - Fade-in, scale, and gradient animations
+- **Interactive Elements** - Hover effects and transitions throughout
+- **Modern Typography** - Bold, gradient text with proper hierarchy
+- **Glass Morphism** - Backdrop blur effects on cards
 
-## Deploy on Vercel
+## 🌐 Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## 📝 License
+
+This project is private and proprietary.
+
+## 🔗 Links
+
+- **Repository:** [https://github.com/kittoe99/wps](https://github.com/kittoe99/wps)
+- **Live Demo:** Coming soon
+
+---
+
+Built with ❤️ by WPScanvas Team
