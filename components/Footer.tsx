@@ -25,7 +25,7 @@ export default function Footer() {
                   WPScanvas
                 </span>
               </Link>
-              <p className="text-sm text-white/70 max-w-md">
+              <p className="text-sm max-w-md text-white">
                 Minimal canvas programs for teams that want gallery-grade finishes without the agency overhead.
               </p>
             </div>
@@ -43,7 +43,9 @@ export default function Footer() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-12 text-sm">
           <div>
-            <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Services</h4>
+            <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider">
+              <span className="text-white">Services</span>
+            </h4>
             <ul className="space-y-3">
               <li>
                 <Link href="/canvas-printing" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
@@ -73,7 +75,9 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Resources</h4>
+            <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider">
+              <span className="text-white">Resources</span>
+            </h4>
             <ul className="space-y-3">
               <li>
                 <Link href="/dashboard" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
@@ -103,7 +107,9 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Studio</h4>
+            <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider">
+              <span className="text-white">Studio</span>
+            </h4>
             <ul className="space-y-3">
               <li>
                 <Link href="/contact" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
@@ -133,7 +139,9 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Contact</h4>
+            <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider">
+              <span className="text-white">Contact</span>
+            </h4>
             <ul className="space-y-3 text-white/70">
               <li>
                 <a href="mailto:studio@wpscanvas.com" className="hover:text-white transition-colors">studio@wpscanvas.com</a>
