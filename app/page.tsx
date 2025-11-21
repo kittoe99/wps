@@ -9,6 +9,8 @@ export default function Home() {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null)
   const [showResults, setShowResults] = useState(false)
   const [selectedImage, setSelectedImage] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
+  const [revealedImages, setRevealedImages] = useState<number[]>([])
   const fileInputRef = useRef<HTMLInputElement>(null)
   const quickIdeasRef = useRef<HTMLDivElement | null>(null)
 
@@ -71,12 +73,27 @@ export default function Home() {
   const generateImage = () => {
     if (!prompt.trim()) return
     console.log('Generating image with prompt:', prompt)
+    setIsLoading(true)
     setShowResults(true)
     setSelectedImage(0)
+    setRevealedImages([])
+    
+    // Simulate 5+ second loading time, then reveal images with stagger
+    setTimeout(() => {
+      setIsLoading(false)
+      // Stagger reveal each image
+      generatedImages.forEach((_, index) => {
+        setTimeout(() => {
+          setRevealedImages(prev => [...prev, index])
+        }, index * 100) // 100ms delay between each image
+      })
+    }, 5000)
   }
 
   const closeResults = () => {
     setShowResults(false)
+    setIsLoading(false)
+    setRevealedImages([])
   }
 
   const triggerFileUpload = () => {
@@ -358,52 +375,107 @@ export default function Home() {
                   </svg>
                   Back to prompt
                 </button>
-                <div className="text-sm text-neutral-500">
-                  <span className="font-semibold text-neutral-900">{generatedImages.length}</span> variations generated
-                </div>
+                {!isLoading && (
+                  <div className="text-sm text-neutral-500">
+                    <span className="font-semibold text-neutral-900">{generatedImages.length}</span> variations generated
+                  </div>
+                )}
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
-                {generatedImages.map((image, index) => (
-                  <button
-                    key={`${image.label}-${index}`}
-                    onClick={() => setSelectedImage(index)}
-                    className={`relative aspect-square rounded-2xl overflow-hidden transition-all duration-300 ${
-                      selectedImage === index 
-                        ? 'ring-4 ring-[#d97759] scale-[0.98] shadow-xl' 
-                        : 'ring-1 ring-neutral-200 hover:ring-2 hover:ring-neutral-300 hover:scale-[0.99] shadow-md'
-                    }`}
-                  >
-                    <Image 
-                      src={image.src} 
-                      alt={image.label} 
-                      fill 
-                      className="object-cover" 
-                    />
-                    {selectedImage === index && (
-                      <div className="absolute inset-0 bg-[#d97759]/10 flex items-center justify-center">
-                        <div className="h-8 w-8 rounded-full bg-[#d97759] flex items-center justify-center shadow-lg">
-                          <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
-                        </div>
+              {isLoading ? (
+                <>
+                  <div className="flex flex-col items-center justify-center py-8 space-y-4">
+                    <div className="relative">
+                      {/* Animated circles */}
+                      <div className="w-16 h-16 relative">
+                        <div className="absolute inset-0 rounded-full border-4 border-[#d97759]/20"></div>
+                        <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-[#d97759] animate-spin"></div>
                       </div>
-                    )}
-                  </button>
-                ))}
-              </div>
+                      {/* Center icon */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <svg className="w-7 h-7 text-[#d97759]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                      </div>
+                    </div>
+                    
+                    <div className="text-center space-y-1">
+                      <h3 className="text-lg md:text-xl font-semibold text-neutral-900">Generating your canvases</h3>
+                      <p className="text-sm text-neutral-600">
+                        Crafting {generatedImages.length} unique variations...
+                      </p>
+                    </div>
 
-              <div className="flex flex-col sm:flex-row justify-center items-center gap-3 pt-4">
-                <button 
-                  onClick={generateImage}
-                  className="px-6 py-3 rounded-xl border border-neutral-200 text-neutral-700 font-semibold hover:bg-neutral-50 transition-all"
-                >
-                  Generate More
-                </button>
-                <button className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#d97759] to-[#c46a4f] text-white font-semibold shadow-md hover:shadow-lg transition-all">
-                  Continue with Selection
-                </button>
-              </div>
+                    {/* Progress dots */}
+                    <div className="flex gap-2">
+                      <div className="w-2 h-2 rounded-full bg-[#d97759] animate-pulse"></div>
+                      <div className="w-2 h-2 rounded-full bg-[#d97759] animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                      <div className="w-2 h-2 rounded-full bg-[#d97759] animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                    </div>
+                  </div>
+
+                  {/* Skeleton loading grid */}
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
+                    {generatedImages.map((_, index) => (
+                      <div
+                        key={`skeleton-${index}`}
+                        className="relative aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-neutral-100 to-neutral-200 animate-pulse"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shimmer"></div>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
+                    {generatedImages.map((image, index) => {
+                      const isRevealed = revealedImages.includes(index)
+                      return (
+                        <button
+                          key={`${image.label}-${index}`}
+                          onClick={() => setSelectedImage(index)}
+                          className={`relative aspect-square rounded-2xl overflow-hidden transition-all duration-500 ${
+                            isRevealed ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+                          } ${
+                            selectedImage === index 
+                              ? 'ring-4 ring-[#d97759] shadow-xl' 
+                              : 'ring-1 ring-neutral-200 hover:ring-2 hover:ring-neutral-300 hover:scale-[0.99] shadow-md'
+                          }`}
+                        >
+                          <Image 
+                            src={image.src} 
+                            alt={image.label} 
+                            fill 
+                            className="object-cover" 
+                          />
+                          {selectedImage === index && (
+                            <div className="absolute inset-0 bg-[#d97759]/10 flex items-center justify-center">
+                              <div className="h-8 w-8 rounded-full bg-[#d97759] flex items-center justify-center shadow-lg">
+                                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                </svg>
+                              </div>
+                            </div>
+                          )}
+                        </button>
+                      )
+                    })}
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row justify-center items-center gap-3 pt-4">
+                    <button 
+                      onClick={generateImage}
+                      className="px-6 py-3 rounded-xl border border-neutral-200 text-neutral-700 font-semibold hover:bg-neutral-50 transition-all"
+                    >
+                      Generate More
+                    </button>
+                    <button className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#d97759] to-[#c46a4f] text-white font-semibold shadow-md hover:shadow-lg transition-all">
+                      Continue with Selection
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           )}
 
