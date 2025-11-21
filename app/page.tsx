@@ -581,69 +581,84 @@ export default function Home() {
 
           {/* Canvas Showcase */}
           {!showResults && (
-            <div className="mt-24 relative left-1/2 right-1/2 w-screen -ml-[50vw] -mr-[50vw]">
-              <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10 xl:px-14">
-                <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                  <div>
-                    <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">From the Community</p>
-                    <h3 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-neutral-900 mt-2">
-                      Canvas Showcase
-                    </h3>
-                    <p className="text-base md:text-lg text-neutral-600 max-w-2xl mt-2">
-                      Explore what artists are creating with our canvas printing studio.
-                    </p>
+            <div className="mt-32 relative">
+              <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+                {/* Header with gradient background */}
+                <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#fff3ec] via-white to-neutral-50 border border-neutral-200 p-8 md:p-12 mb-12">
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-[#d97759]/5 rounded-full blur-3xl"></div>
+                  <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#d97759]/5 rounded-full blur-3xl"></div>
+                  
+                  <div className="relative z-10 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+                    <div className="flex-1">
+                      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#d97759]/10 border border-[#d97759]/20 mb-4">
+                        <svg className="w-4 h-4 text-[#d97759]" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <span className="text-xs font-semibold text-[#d97759] uppercase tracking-wider">Community Gallery</span>
+                      </div>
+                      <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-neutral-900 mb-3">
+                        Featured Canvas Prints
+                      </h3>
+                      <p className="text-base md:text-lg text-neutral-600 max-w-2xl">
+                        Discover stunning creations from our community of artists and designers. Get inspired for your next masterpiece.
+                      </p>
+                    </div>
+                    <button className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#d97759] to-[#c46a4f] text-white font-semibold hover:shadow-lg hover:shadow-[#d97759]/30 transition-all duration-300 whitespace-nowrap">
+                      <span>View All Prints</span>
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                    </button>
                   </div>
-                  <button className="inline-flex items-center gap-2 text-sm font-semibold text-[#d97759] hover:text-[#c56b4c] transition-colors">
-                    Browse All
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-5-5l5 5-5 5" />
-                    </svg>
-                  </button>
                 </div>
 
               {/* Canvas Grid */}
-              <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 xl:gap-10">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 {[
-                  { src: '/wps-canvas.png', size: '24" × 36"' },
-                  { src: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=400&q=80', size: '18" × 24"' },
-                  { src: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=400&q=80', size: '12" × 16"' },
-                  { src: 'https://images.unsplash.com/photo-1557672172-298e090bd0f1?auto=format&fit=crop&w=400&q=80', size: '18" × 24"' },
-                  { src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=400&q=80', size: '24" × 36"' },
-                  { src: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=400&q=80', size: '30" × 40"' },
-                  { src: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=400&q=80', size: '16" × 20"' },
-                  { src: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&w=400&q=80', size: '18" × 24"' },
-                  { src: 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=400&q=80', size: '20" × 30"' },
-                  { src: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=400&q=80', size: '16" × 20"' },
-                  { src: 'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=400&q=80', size: '12" × 16"' },
-                  { src: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=400&q=80', size: '18" × 24"' },
+                  { src: '/wps-canvas.png', size: '24" × 36"', artist: 'Sarah M.', likes: 234 },
+                  { src: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=400&q=80', size: '18" × 24"', artist: 'Alex K.', likes: 189 },
+                  { src: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=400&q=80', size: '12" × 16"', artist: 'Jordan P.', likes: 156 },
+                  { src: 'https://images.unsplash.com/photo-1557672172-298e090bd0f1?auto=format&fit=crop&w=400&q=80', size: '18" × 24"', artist: 'Taylor R.', likes: 201 },
+                  { src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=400&q=80', size: '24" × 36"', artist: 'Morgan L.', likes: 278 },
+                  { src: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=400&q=80', size: '30" × 40"', artist: 'Casey B.', likes: 312 },
                 ].map((canvas, index) => (
-                  <div key={index} className="group cursor-pointer transform hover:-translate-y-2 transition-all duration-500">
-                    <div className="relative bg-white/90 backdrop-blur-sm p-5 md:p-6 shadow-lg hover:shadow-2xl transition-all duration-500 rounded-3xl border border-neutral-100">
-                      <div className="relative border-[10px] border-neutral-900 overflow-hidden rounded-xl">
-                        <div className="aspect-[16/9] relative">
-                          <Image
-                            src={canvas.src}
-                            alt="Canvas print"
-                            fill
-                            className="object-cover group-hover:scale-110 transition-transform duration-500"
-                          />
-                          {/* Overlay on hover */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-between px-6 pb-4">
-                            <div className="text-white text-sm font-semibold px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/30">
-                              View Details
+                  <div key={index} className="group cursor-pointer">
+                    <div className="relative overflow-hidden rounded-2xl bg-neutral-100 border border-neutral-200 shadow-sm hover:shadow-xl transition-all duration-300">
+                      <div className="aspect-[4/5] relative">
+                        <Image
+                          src={canvas.src}
+                          alt={`Canvas print by ${canvas.artist}`}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        {/* Gradient overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        
+                        {/* Hover content */}
+                        <div className="absolute inset-x-0 bottom-0 p-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                          <div className="flex items-center justify-between text-white mb-3">
+                            <div className="flex items-center gap-2">
+                              <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center text-xs font-semibold">
+                                {canvas.artist.charAt(0)}
+                              </div>
+                              <span className="text-sm font-medium">{canvas.artist}</span>
                             </div>
-                            <span className="text-xs uppercase tracking-widest text-white/70">{canvas.size}</span>
+                            <div className="flex items-center gap-1.5 text-sm">
+                              <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                              </svg>
+                              <span className="font-medium">{canvas.likes}</span>
+                            </div>
                           </div>
+                          <button className="w-full py-2.5 px-4 rounded-xl bg-white text-neutral-900 font-semibold text-sm hover:bg-neutral-100 transition-colors">
+                            View Print
+                          </button>
                         </div>
-                      </div>
-                    </div>
-                    <div className="mt-4 flex items-center justify-between px-1">
-                      <p className="text-sm font-medium text-neutral-600">Edition #{index + 1}</p>
-                      <div className="flex items-center gap-2 text-[#d97759] text-xs font-semibold">
-                        Premium
-                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
+
+                        {/* Size badge */}
+                        <div className="absolute top-3 right-3 px-2.5 py-1 rounded-lg bg-white/90 backdrop-blur-sm border border-neutral-200 text-xs font-semibold text-neutral-700">
+                          {canvas.size}
+                        </div>
                       </div>
                     </div>
                   </div>
