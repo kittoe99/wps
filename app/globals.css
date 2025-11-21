@@ -1,8 +1,32 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Light, near-neutral background system */
+  --bg-page: #f9f8f6;
+  --panel: #f9f9f9;
+  --panel-hover: #f5f5f5;
+  --border: #e5e5e5;
+  --accent: #d97759;
+  --background: var(--bg-page);
+  --foreground: #0a0a0a;
+  
+  /* Harmonious accent-derived palette */
+  --accent-primary: var(--accent);
+  --accent-focus: #c46a4f;
+  --accent-subtle: #fdf5f2;
+  --accent-muted: #fae8e1;
+  --accent-soft: #f7dbd0;
+  
+  /* Typography tokens */
+  --text-primary: #000000;
+  --text-secondary: #404040;
+  --text-tertiary: #6b6b6b;
+  --text-accent: var(--accent-primary);
+  
+  /* Subtle background pattern */
+  --pattern-size: 32px;
+  --pattern-dot: rgba(217, 119, 89, 0.02);
+  --pattern-dot-2: rgba(217, 119, 89, 0.01);
 }
 
 @theme inline {
@@ -10,17 +34,143 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  
+  /* Custom color tokens */
+  --color-accent: #d97759;
+  --color-accent-primary: #d97759;
+  --color-accent-focus: #b85e44;
+  --color-accent-subtle: #fff1ec;
+  --color-accent-muted: #fde6de;
+  --color-accent-soft: #fbd5c6;
+  --color-page: #fefefe;
+  --color-panel: #f9f9f9;
+  --color-panel-hover: #f5f5f5;
+  --color-border: #e5e5e5;
+  --color-soft: #e5e7eb;
+  --color-primary: #0a0a0a;
+  --color-secondary: #525252;
+  --color-tertiary: #737373;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  background-color: var(--bg-page);
+  overscroll-behavior-y: contain;
+  touch-action: pan-y;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--background);
+  background-image:
+    radial-gradient(circle at 1px 1px, var(--pattern-dot) 1px, transparent 1.2px),
+    radial-gradient(circle at calc(var(--pattern-size)/2) calc(var(--pattern-size)/2), var(--pattern-dot-2) 1px, transparent 1.2px);
+  background-repeat: repeat;
+  background-size: var(--pattern-size) var(--pattern-size);
+  color: var(--text-primary);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+h1,
+h2 {
+  color: var(--text-primary);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+h3,
+h4 {
+  color: var(--text-primary);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+h5,
+h6 {
+  color: var(--text-primary);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+p {
+  color: var(--text-secondary);
+}
+
+label,
+.label {
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+}
+
+.text-primary {
+  color: var(--text-primary);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.text-tertiary {
+  color: var(--text-tertiary);
+}
+
+.text-accent {
+  color: var(--text-accent);
+}
+
+.bg-page {
+  background-color: var(--bg-page);
+}
+
+.bg-panel {
+  background-color: var(--panel);
+}
+
+.border-soft {
+  border-color: var(--border);
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Custom animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 3s ease infinite;
 }
