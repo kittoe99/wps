@@ -83,15 +83,15 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#f9f8f6]">
       {/* Hero Section */}
-      <section className="relative pt-6 pb-16 md:pt-12 md:pb-24 bg-white">
+      <section className="relative pt-0 pb-12 md:pt-4 md:pb-20 bg-white">
         <div className="mx-auto max-w-5xl px-4 md:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8">
             {/* SVG Pattern Background */}
-            <div className="flex justify-center">
-              <svg className="w-full max-w-4xl h-[28rem] md:h-80 lg:h-[28rem]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" preserveAspectRatio="xMidYMid meet">
+            <div className="flex justify-center mt-[-4.5rem] md:mt-[-1.5rem]">
+              <svg className="w-full max-w-4xl h-[28rem] md:h-80 lg:h-[28rem]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 200" preserveAspectRatio="xMidYMid meet">
                 <defs>
                   {/* Repeating pattern - 3 different card styles in one horizontal tile */}
-                  <pattern id="consistentPattern" x="0" y="0" width="660" height="300" patternUnits="userSpaceOnUse">
+                  <pattern id="consistentPattern" x="0" y="0" width="660" height="200" patternUnits="userSpaceOnUse">
                     {/* Style 1: circle-focused card (warm orange) */}
                     <g opacity="0.32">
                       <rect x="40" y="40" width="160" height="160" rx="28" fill="none" stroke="#f97316" strokeWidth="1.2" />
@@ -116,9 +116,9 @@ export default function Home() {
                     {/* Shared soft baseline under all cards */}
                     <line
                       x1="50"
-                      y1="230"
+                      y1="170"
                       x2="640"
-                      y2="230"
+                      y2="170"
                       stroke="#fdba74"
                       strokeWidth="0.9"
                       opacity="0.16"
