@@ -8,13 +8,49 @@ export default function Home() {
   const [prompt, setPrompt] = useState('')
   const [uploadedFile, setUploadedFile] = useState<File | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const quickIdeasRef = useRef<HTMLDivElement | null>(null)
 
   const promptExamples = [
-    'Abstract geometric patterns',
-    'Minimalist mountain landscape',
-    'Vibrant sunset over ocean',
-    'Modern art with bold colors'
+    {
+      label: 'Abstract geometric patterns',
+      image: '/wps-canvas.png',
+    },
+    {
+      label: 'Minimalist mountain landscape',
+      image: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=400&q=80',
+    },
+    {
+      label: 'Vibrant sunset over ocean',
+      image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80',
+    },
+    {
+      label: 'Modern art with bold colors',
+      image: 'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=400&q=80',
+    },
+    {
+      label: 'Black & white city skyline',
+      image: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=400&q=80',
+    },
+    {
+      label: 'Cozy living room gallery wall',
+      image: 'https://images.unsplash.com/photo-1505691723518-36a5ac3be353?auto=format&fit=crop&w=400&q=80',
+    },
+    {
+      label: 'Minimal line art portrait',
+      image: 'https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=400&q=80',
+    },
+    {
+      label: 'Soft pastel landscape',
+      image: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=400&q=80',
+    },
   ]
+
+  const scrollQuickIdeas = (direction: 'left' | 'right') => {
+    const container = quickIdeasRef.current
+    if (!container) return
+    const amount = direction === 'left' ? -200 : 200
+    container.scrollBy({ left: amount, behavior: 'smooth' })
+  }
 
   const generateImage = () => {
     if (!prompt.trim()) return
@@ -143,23 +179,57 @@ export default function Home() {
                 
                 {/* Quick Prompts */}
                 <div className="relative">
-                  <p className="text-sm font-medium text-neutral-700 mb-3 flex items-center gap-2">
-                    <svg className="w-4 h-4 text-[#d97759]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                    Quick start ideas
-                  </p>
-                  <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory">
-                    {promptExamples.map((example) => (
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-xs font-medium text-neutral-500 flex items-center gap-1.5">
+                      <span className="h-1 w-1 rounded-full bg-[#d97759]" />
+                      Quick start ideas
+                    </p>
+                    <div className="hidden md:flex items-center gap-1 text-neutral-500">
                       <button
-                        key={example}
-                        onClick={() => setPrompt(example)}
-                        className="group flex-shrink-0 px-5 py-2.5 text-sm font-medium bg-gradient-to-br from-white to-neutral-50 border border-neutral-200 rounded-xl hover:border-[#d97759] hover:shadow-md hover:shadow-[#d97759]/10 transition-all duration-300 snap-start whitespace-nowrap transform hover:scale-105"
+                        type="button"
+                        onClick={() => scrollQuickIdeas('left')}
+                        className="h-7 w-7 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:bg-neutral-50 text-xs"
+                        aria-label="Scroll ideas left"
                       >
-                        <span className="bg-gradient-to-r from-neutral-700 to-neutral-900 group-hover:from-[#d97759] group-hover:to-[#c46a4f] bg-clip-text text-transparent transition-all duration-300">
-                          {example}
-                        </span>
+                        
                       </button>
+                      <button
+                        type="button"
+                        onClick={() => scrollQuickIdeas('right')}
+                        className="h-7 w-7 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:bg-neutral-50 text-xs"
+                        aria-label="Scroll ideas right"
+                      >
+                        
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    ref={quickIdeasRef}
+                    className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory"
+                  >
+                    {promptExamples.map((example) => (
+                      <div
+                        key={example.label}
+                        className="flex-shrink-0 snap-start w-32 md:w-40"
+                      >
+                        <button
+                          type="button"
+                          onClick={() => setPrompt(example.label)}
+                          className="w-full px-3.5 py-1.5 text-xs md:text-sm font-medium rounded-full border border-neutral-200 bg-neutral-50 text-neutral-700 hover:border-[#d97759] hover:bg-[#fff3ec] transition-colors duration-200 whitespace-nowrap overflow-hidden text-ellipsis"
+                        >
+                          {example.label}
+                        </button>
+                        <div className="mt-2 rounded-xl border border-neutral-200 overflow-hidden bg-neutral-100">
+                          <div className="relative aspect-[4/3]">
+                            <Image
+                              src={example.image}
+                              alt={example.label}
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
+                        </div>
+                      </div>
                     ))}
                   </div>
                 </div>
