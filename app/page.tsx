@@ -73,6 +73,10 @@ export default function Home() {
   const generateImage = () => {
     if (!prompt.trim()) return
     console.log('Generating image with prompt:', prompt)
+    
+    // Scroll to top smoothly
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    
     setIsLoading(true)
     setShowResults(true)
     setSelectedImage(0)
