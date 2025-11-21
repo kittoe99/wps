@@ -83,65 +83,51 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#f9f8f6]">
       {/* Hero Section */}
-      <section className="relative pt-0 pb-12 md:pt-4 md:pb-20 bg-white">
-        <div className="mx-auto max-w-5xl px-4 md:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            {/* SVG Pattern Background */}
-            <div className="flex justify-center mt-[-4.5rem] md:mt-[-1.5rem]">
-              <svg className="w-full max-w-4xl h-[28rem] md:h-80 lg:h-[28rem]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 200" preserveAspectRatio="xMidYMid meet">
-                <defs>
-                  {/* Repeating pattern - 3 different card styles in one horizontal tile */}
-                  <pattern id="consistentPattern" x="0" y="0" width="660" height="200" patternUnits="userSpaceOnUse">
-                    {/* Style 1: circle-focused card (warm orange) */}
-                    <g opacity="0.32">
-                      <rect x="40" y="40" width="160" height="160" rx="28" fill="none" stroke="#f97316" strokeWidth="1.2" />
-                      <circle cx="120" cy="120" r="44" fill="none" stroke="#fdba74" strokeWidth="1.1" opacity="0.85" />
-                    </g>
+      <section className="relative -mt-6 pt-0 pb-12 md:mt-0 md:pt-6 md:pb-20 bg-white overflow-hidden">
+        <div className="relative mx-auto max-w-5xl px-4 md:px-6 lg:px-8">
+          {/* SVG Pattern Background - positioned absolutely behind text */}
+          <div className="absolute left-0 top-0 w-full h-[280px] md:h-[330px] pointer-events-none">
+            <div className="relative w-full h-full">
+              <div className="absolute inset-0 mx-auto w-[85%] md:w-[60%] h-full flex items-start justify-center overflow-hidden">
+                <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice">
+                  <defs>
+                    <pattern id="heroDots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+                      <circle cx="2" cy="2" r="2" fill="#f4cdb4" opacity="0.5" />
+                    </pattern>
+                  </defs>
 
-                    {/* Style 2: split card (soft coral) */}
-                    <g opacity="0.28">
-                      <rect x="250" y="40" width="160" height="160" rx="28" fill="none" stroke="#fb923c" strokeWidth="1.2" />
-                      <line x1="250" y1="120" x2="410" y2="120" stroke="#fed7aa" strokeWidth="1" opacity="0.9" />
-                      <circle cx="330" cy="85" r="26" fill="none" stroke="#fb923c" strokeWidth="1" opacity="0.8" />
-                    </g>
+                  {/* dotted texture */}
+                  <rect width="1200" height="400" fill="url(#heroDots)" opacity="0.4" />
 
-                    {/* Style 3: diagonal accent card (peach) */}
-                    <g opacity="0.28">
-                      <rect x="460" y="40" width="160" height="160" rx="28" fill="none" stroke="#fdba74" strokeWidth="1.2" />
-                      <line x1="475" y1="65" x2="615" y2="175" stroke="#fb923c" strokeWidth="1" opacity="0.8" />
-                      <circle cx="490" cy="60" r="6" fill="#f97316" opacity="0.6" />
-                      <circle cx="610" cy="180" r="6" fill="#fed7aa" opacity="0.4" />
-                    </g>
+                  <g fill="none" stroke="#efc2a9" strokeWidth="1.6" opacity="0.65">
+                    {/* single sweeping arc */}
+                    <path d="M-150 260 Q 150 40 540 200 T 1080 190" />
 
-                    {/* Shared soft baseline under all cards */}
-                    <line
-                      x1="50"
-                      y1="170"
-                      x2="640"
-                      y2="170"
-                      stroke="#fdba74"
-                      strokeWidth="0.9"
-                      opacity="0.16"
-                    />
-                  </pattern>
-                </defs>
-                
-                {/* Apply pattern across entire SVG */}
-                <rect width="1000" height="300" fill="url(#consistentPattern)" />
-              </svg>
+                    {/* quarter circle outline */}
+                    <path d="M80 100 Q 80 20 160 20 H440" opacity="0.5" />
+
+                    {/* subtle concentric circle */}
+                    <circle cx="540" cy="210" r="110" opacity="0.45" />
+                    <circle cx="540" cy="210" r="70" opacity="0.35" />
+
+                    {/* thin diagonal */}
+                    <line x1="220" y1="40" x2="500" y2="220" opacity="0.4" />
+                  </g>
+                </svg>
+              </div>
             </div>
+          </div>
 
-            {/* Hero text overlapping SVG a bit deeper using negative margin */}
-            <div className="-mt-24 md:-mt-28 px-4 md:px-6 lg:px-8">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-neutral-900 mb-4 leading-tight drop-shadow-sm">
-                Turn Your Ideas Into
-                <span className="block text-[#d97759]">Stunning Canvas Art</span>
-              </h1>
-              <p className="text-base md:text-lg text-neutral-600 max-w-2xl mx-auto drop-shadow-sm">
-                Generate with AI or upload your own image. Transform any vision into
-                <span className="font-semibold text-neutral-900"> gallery-quality canvas prints</span> in minutes.
-              </p>
-            </div>
+          {/* Hero text in foreground */}
+          <div className="relative z-10 text-center pt-24 md:pt-32 pb-8">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-neutral-900 mb-4 leading-tight">
+              Turn Your Ideas Into
+              <span className="block text-[#d97759]">Stunning Canvas Art</span>
+            </h1>
+            <p className="text-base md:text-lg text-neutral-600 max-w-2xl mx-auto">
+              Generate with AI or upload your own image. Transform any vision into
+              <span className="font-semibold text-neutral-900"> gallery-quality canvas prints</span> in minutes.
+            </p>
           </div>
 
           <div className="relative bg-white rounded-2xl md:rounded-3xl border border-neutral-200 p-4 md:p-6 lg:p-8 shadow-sm">
