@@ -7,6 +7,8 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState('generate')
   const [prompt, setPrompt] = useState('')
   const [uploadedFile, setUploadedFile] = useState<File | null>(null)
+  const [showResults, setShowResults] = useState(false)
+  const [selectedImage, setSelectedImage] = useState(0)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const quickIdeasRef = useRef<HTMLDivElement | null>(null)
 
@@ -45,6 +47,20 @@ export default function Home() {
     },
   ]
 
+  const generatedImages = [
+    { src: '/wps-canvas.png', label: 'Abstract studio wall' },
+    { src: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=400&q=80', label: 'Painterly flora study' },
+    { src: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=400&q=80', label: 'Minimalist arches' },
+    { src: 'https://images.unsplash.com/photo-1557672172-298e090bd0f1?auto=format&fit=crop&w=400&q=80', label: 'Desert textures' },
+    { src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=400&q=80', label: 'Coastal palette' },
+    { src: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=400&q=80', label: 'Soft gradients' },
+    { src: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=400&q=80', label: 'Botanical close-up' },
+    { src: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&w=400&q=80', label: 'Sunset horizon' },
+    { src: 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=400&q=80', label: 'Moody mountains' },
+    { src: 'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=400&q=80', label: 'Modern sculpture' }
+  ]
+
+
   const scrollQuickIdeas = (direction: 'left' | 'right') => {
     const container = quickIdeasRef.current
     if (!container) return
@@ -55,7 +71,12 @@ export default function Home() {
   const generateImage = () => {
     if (!prompt.trim()) return
     console.log('Generating image with prompt:', prompt)
-    // Navigate to dashboard or show generation UI
+    setShowResults(true)
+    setSelectedImage(0)
+  }
+
+  const closeResults = () => {
+    setShowResults(false)
   }
 
   const triggerFileUpload = () => {
@@ -85,88 +106,93 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative -mt-6 pt-0 pb-12 md:mt-0 md:pt-6 md:pb-20 bg-white overflow-hidden">
         <div className="relative mx-auto max-w-5xl px-4 md:px-6 lg:px-8">
-          {/* SVG Pattern Background - positioned absolutely behind text */}
-          <div className="absolute left-0 top-0 w-full h-[280px] md:h-[330px] pointer-events-none">
-            <div className="relative w-full h-full">
-              <div className="absolute inset-0 mx-auto w-[85%] md:w-[60%] h-full flex items-start justify-center overflow-hidden">
-                <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice">
-                  <defs>
-                    <pattern id="heroDots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-                      <circle cx="2" cy="2" r="2" fill="#f4cdb4" opacity="0.5" />
-                    </pattern>
-                  </defs>
+          {!showResults && (
+            <>
+              {/* SVG Pattern Background - positioned absolutely behind text */}
+              <div className="absolute left-0 top-0 w-full h-[280px] md:h-[330px] pointer-events-none">
+                <div className="relative w-full h-full">
+                  <div className="absolute inset-0 mx-auto w-[85%] md:w-[60%] h-full flex items-start justify-center overflow-hidden">
+                    <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice">
+                      <defs>
+                        <pattern id="heroDots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+                          <circle cx="2" cy="2" r="2" fill="#f4cdb4" opacity="0.5" />
+                        </pattern>
+                      </defs>
 
-                  {/* dotted texture */}
-                  <rect width="1200" height="400" fill="url(#heroDots)" opacity="0.4" />
+                      {/* dotted texture */}
+                      <rect width="1200" height="400" fill="url(#heroDots)" opacity="0.4" />
 
-                  <g fill="none" stroke="#efc2a9" strokeWidth="1.6" opacity="0.65">
-                    {/* single sweeping arc */}
-                    <path d="M-150 260 Q 150 40 540 200 T 1080 190" />
+                      <g fill="none" stroke="#efc2a9" strokeWidth="1.6" opacity="0.65">
+                        {/* single sweeping arc */}
+                        <path d="M-150 260 Q 150 40 540 200 T 1080 190" />
 
-                    {/* quarter circle outline */}
-                    <path d="M80 100 Q 80 20 160 20 H440" opacity="0.5" />
+                        {/* quarter circle outline */}
+                        <path d="M80 100 Q 80 20 160 20 H440" opacity="0.5" />
 
-                    {/* subtle concentric circle */}
-                    <circle cx="540" cy="210" r="110" opacity="0.45" />
-                    <circle cx="540" cy="210" r="70" opacity="0.35" />
+                        {/* subtle concentric circle */}
+                        <circle cx="540" cy="210" r="110" opacity="0.45" />
+                        <circle cx="540" cy="210" r="70" opacity="0.35" />
 
-                    {/* thin diagonal */}
-                    <line x1="220" y1="40" x2="500" y2="220" opacity="0.4" />
-                  </g>
-                </svg>
+                        {/* thin diagonal */}
+                        <line x1="220" y1="40" x2="500" y2="220" opacity="0.4" />
+                      </g>
+                    </svg>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
 
-          {/* Hero text in foreground */}
-          <div className="relative z-10 text-center pt-24 md:pt-32 pb-8">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-neutral-900 mb-4 leading-tight">
-              Turn Your Ideas Into
-              <span className="block text-[#d97759]">Stunning Canvas Art</span>
-            </h1>
-            <p className="text-base md:text-lg text-neutral-600 max-w-2xl mx-auto">
-              Generate with AI or upload your own image. Transform any vision into
-              <span className="font-semibold text-neutral-900"> gallery-quality canvas prints</span> in minutes.
-            </p>
-          </div>
+              {/* Hero text in foreground */}
+              <div className="relative z-10 text-center pt-24 md:pt-32 pb-8">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-neutral-900 mb-4 leading-tight">
+                  Turn Your Ideas Into
+                  <span className="block text-[#d97759]">Stunning Canvas Art</span>
+                </h1>
+                <p className="text-base md:text-lg text-neutral-600 max-w-2xl mx-auto">
+                  Generate with AI or upload your own image. Transform any vision into
+                  <span className="font-semibold text-neutral-900"> gallery-quality canvas prints</span> in minutes.
+                </p>
+              </div>
+            </>
+          )}
 
-          <div className="relative bg-white rounded-2xl md:rounded-3xl border border-neutral-200 p-4 md:p-6 lg:p-8 shadow-sm">
-            {/* Tabs */}
-            <div className="relative flex gap-1 md:gap-2 mb-6 md:mb-8 p-1 bg-neutral-100/80 rounded-xl w-full md:w-fit border border-neutral-200">
-              <button
-                onClick={() => setActiveTab('generate')}
-                className={`flex-1 md:flex-none px-3 md:px-6 py-2.5 md:py-3 text-xs md:text-sm font-semibold transition-all duration-300 rounded-lg relative ${
-                  activeTab === 'generate' 
-                    ? 'text-white bg-gradient-to-r from-[#d97759] to-[#c46a4f] shadow-lg shadow-[#d97759]/25' 
-                    : 'text-neutral-600 hover:text-neutral-900 hover:bg-white/50'
-                }`}
-              >
-                <span className="relative z-10 flex items-center justify-center gap-1.5 md:gap-2">
-                  <svg className="w-3.5 h-3.5 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                  <span className="whitespace-nowrap">Generate with AI</span>
-                </span>
-              </button>
-              <button
-                onClick={() => setActiveTab('upload')}
-                className={`flex-1 md:flex-none px-3 md:px-6 py-2.5 md:py-3 text-xs md:text-sm font-semibold transition-all duration-300 rounded-lg relative ${
-                  activeTab === 'upload' 
-                    ? 'text-white bg-gradient-to-r from-[#d97759] to-[#c46a4f] shadow-lg shadow-[#d97759]/25' 
-                    : 'text-neutral-600 hover:text-neutral-900 hover:bg-white/50'
-                }`}
-              >
-                <span className="relative z-10 flex items-center justify-center gap-1.5 md:gap-2">
-                  <svg className="w-3.5 h-3.5 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                  </svg>
-                  <span className="whitespace-nowrap">Upload Image</span>
-                </span>
-              </button>
-            </div>
+          {!showResults ? (
+            <div className="relative bg-white rounded-2xl md:rounded-3xl border border-neutral-200 p-4 md:p-6 lg:p-8 shadow-sm">
+              {/* Tabs */}
+              <div className="relative flex gap-1 md:gap-2 mb-6 md:mb-8 p-1 bg-neutral-100/80 rounded-xl w-full md:w-fit border border-neutral-200">
+                <button
+                  onClick={() => setActiveTab('generate')}
+                  className={`flex-1 md:flex-none px-3 md:px-6 py-2.5 md:py-3 text-xs md:text-sm font-semibold transition-all duration-300 rounded-lg relative ${
+                    activeTab === 'generate' 
+                      ? 'text-white bg-gradient-to-r from-[#d97759] to-[#c46a4f] shadow-lg shadow-[#d97759]/25' 
+                      : 'text-neutral-600 hover:text-neutral-900 hover:bg-white/50'
+                  }`}
+                >
+                  <span className="relative z-10 flex items-center justify-center gap-1.5 md:gap-2">
+                    <svg className="w-3.5 h-3.5 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    <span className="whitespace-nowrap">Generate with AI</span>
+                  </span>
+                </button>
+                <button
+                  onClick={() => setActiveTab('upload')}
+                  className={`flex-1 md:flex-none px-3 md:px-6 py-2.5 md:py-3 text-xs md:text-sm font-semibold transition-all duration-300 rounded-lg relative ${
+                    activeTab === 'upload' 
+                      ? 'text-white bg-gradient-to-r from-[#d97759] to-[#c46a4f] shadow-lg shadow-[#d97759]/25' 
+                      : 'text-neutral-600 hover:text-neutral-900 hover:bg-white/50'
+                  }`}
+                >
+                  <span className="relative z-10 flex items-center justify-center gap-1.5 md:gap-2">
+                    <svg className="w-3.5 h-3.5 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                    <span className="whitespace-nowrap">Upload Image</span>
+                  </span>
+                </button>
+              </div>
 
-            {/* Generate Tab */}
-            {activeTab === 'generate' && (
+              {/* Generate Tab */}
+              {activeTab === 'generate' && (
               <div className="relative space-y-6">
                 <div className="relative group">
                   <div className="absolute -inset-0.5 bg-gradient-to-r from-[#d97759] to-[#c46a4f] rounded-2xl opacity-0 group-focus-within:opacity-20 blur transition duration-300"></div>
@@ -319,28 +345,114 @@ export default function Home() {
                 </button>
               </div>
             )}
-          </div>
-
-          {/* Canvas Showcase */}
-          <div className="mt-24 relative left-1/2 right-1/2 w-screen -ml-[50vw] -mr-[50vw]">
-            <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10 xl:px-14">
-              <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                <div>
-                  <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">From the Community</p>
-                  <h3 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-neutral-900 mt-2">
-                    Canvas Showcase
-                  </h3>
-                  <p className="text-base md:text-lg text-neutral-600 max-w-2xl mt-2">
-                    Explore what artists are creating with our canvas printing studio.
-                  </p>
-                </div>
-                <button className="inline-flex items-center gap-2 text-sm font-semibold text-[#d97759] hover:text-[#c56b4c] transition-colors">
-                  Browse All
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-5-5l5 5-5 5" />
+            </div>
+          ) : (
+            <div className="relative pt-8 md:pt-12 space-y-8">
+              <div className="flex items-center justify-between">
+                <button
+                  onClick={closeResults}
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-neutral-600 hover:text-neutral-900 transition-colors"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                   </svg>
+                  Back to prompt
+                </button>
+                <div className="text-sm text-neutral-500">
+                  <span className="font-semibold text-neutral-900">{generatedImages.length}</span> variations generated
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
+                {generatedImages.map((image, index) => (
+                  <button
+                    key={`${image.label}-${index}`}
+                    onClick={() => setSelectedImage(index)}
+                    className={`relative aspect-square rounded-2xl overflow-hidden transition-all duration-300 ${
+                      selectedImage === index 
+                        ? 'ring-4 ring-[#d97759] scale-[0.98] shadow-xl' 
+                        : 'ring-1 ring-neutral-200 hover:ring-2 hover:ring-neutral-300 hover:scale-[0.99] shadow-md'
+                    }`}
+                  >
+                    <Image 
+                      src={image.src} 
+                      alt={image.label} 
+                      fill 
+                      className="object-cover" 
+                    />
+                    {selectedImage === index && (
+                      <div className="absolute inset-0 bg-[#d97759]/10 flex items-center justify-center">
+                        <div className="h-8 w-8 rounded-full bg-[#d97759] flex items-center justify-center shadow-lg">
+                          <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                        </div>
+                      </div>
+                    )}
+                  </button>
+                ))}
+              </div>
+
+              <div className="flex flex-col sm:flex-row justify-center items-center gap-3 pt-4">
+                <button 
+                  onClick={generateImage}
+                  className="px-6 py-3 rounded-xl border border-neutral-200 text-neutral-700 font-semibold hover:bg-neutral-50 transition-all"
+                >
+                  Generate More
+                </button>
+                <button className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#d97759] to-[#c46a4f] text-white font-semibold shadow-md hover:shadow-lg transition-all">
+                  Continue with Selection
                 </button>
               </div>
+            </div>
+          )}
+
+          {showResults && (
+            <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-3xl px-4">
+              <div className="relative group">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-[#d97759] to-[#c46a4f] rounded-2xl opacity-0 group-focus-within:opacity-20 blur transition duration-300"></div>
+                <textarea
+                  value={prompt}
+                  onChange={(e) => setPrompt(e.target.value)}
+                  placeholder="Refine your prompt or try a new one..."
+                  rows={2}
+                  className="relative w-full px-5 py-4 bg-white border border-neutral-200 rounded-2xl text-neutral-900 placeholder-neutral-400 focus:outline-none focus:border-[#d97759] focus:ring-2 focus:ring-[#d97759]/10 resize-none transition-all duration-300 text-base shadow-xl"
+                ></textarea>
+                <button
+                  onClick={generateImage}
+                  disabled={!prompt.trim()}
+                  className="absolute right-3 bottom-3 px-4 py-2 rounded-xl bg-gradient-to-r from-[#d97759] to-[#c46a4f] text-white font-semibold hover:shadow-lg hover:shadow-[#d97759]/30 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none transition-all duration-300 flex items-center gap-2 text-sm"
+                >
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                  </svg>
+                  Generate
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Canvas Showcase */}
+          {!showResults && (
+            <div className="mt-24 relative left-1/2 right-1/2 w-screen -ml-[50vw] -mr-[50vw]">
+              <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10 xl:px-14">
+                <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                  <div>
+                    <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">From the Community</p>
+                    <h3 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-neutral-900 mt-2">
+                      Canvas Showcase
+                    </h3>
+                    <p className="text-base md:text-lg text-neutral-600 max-w-2xl mt-2">
+                      Explore what artists are creating with our canvas printing studio.
+                    </p>
+                  </div>
+                  <button className="inline-flex items-center gap-2 text-sm font-semibold text-[#d97759] hover:text-[#c56b4c] transition-colors">
+                    Browse All
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-5-5l5 5-5 5" />
+                    </svg>
+                  </button>
+                </div>
 
               {/* Canvas Grid */}
               <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 xl:gap-10">
@@ -391,7 +503,8 @@ export default function Home() {
                 ))}
               </div>
             </div>
-          </div>
+            </div>
+          )}
         </div>
       </section>
     </main>
