@@ -57,7 +57,7 @@ fi
 if grep -qi "successfully authenticated" /tmp/github-ssh-test.txt; then
   echo ""
   echo "SSH is working. Push with:"
-  echo "  cd ${REPO_DIR} && git push -u origin main"
+  echo "  cd ${REPO_DIR} && git push -u origin master"
 else
   echo ""
   echo "SSH test did not succeed yet."
