@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -14,21 +14,26 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const sourceSerif = Source_Serif_4({
+  variable: "--font-source-serif",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
-  title: "WPS Canvas | Create Websites and Print Your Art on Canvas",
-  description: "Create a website in minutes and turn images into gallery‑quality canvas prints with WPS Canvas. AI tools, easy publishing, fast delivery.",
-  keywords: "WPS Canvas, AI website builder, website creator, no-code website, professional website design, AI web design, website builder tool, create website, canvas printing, print canvas art",
-  authors: [{ name: "WPS Canvas" }],
+  title: "wpscanvas — Your Website, Powered by AI",
+  description: "A website that runs your business while you sleep. Website, AI chatbot, Google reviews, and phone answering — one flat monthly fee.",
+  keywords: "WPS Canvas, AI website, AI chatbot, Google reviews, AI phone answering, local business website, website subscription",
+  authors: [{ name: "wpscanvas" }],
   openGraph: {
     type: "website",
-    title: "WPS Canvas | Create Websites and Print Your Art on Canvas",
-    description: "Create a website in minutes and turn images into gallery‑quality canvas prints with WPS Canvas. AI tools, easy publishing, fast delivery.",
-    siteName: "WPS Canvas",
+    title: "wpscanvas — Your Website, Powered by AI",
+    description: "Website, AI chatbot, reviews generator, and phone answering — all included in one subscription.",
+    siteName: "wpscanvas",
   },
   twitter: {
     card: "summary_large_image",
-    title: "WPS Canvas | Create Websites and Print Your Art on Canvas",
-    description: "Create a website in minutes and turn images into gallery‑quality canvas prints with WPS Canvas. AI tools, easy publishing, fast delivery.",
+    title: "wpscanvas — Your Website, Powered by AI",
+    description: "Website, AI chatbot, reviews generator, and phone answering — all included in one subscription.",
   },
 };
 
@@ -40,7 +45,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${sourceSerif.variable} antialiased`}
       >
         <Header />
         {children}

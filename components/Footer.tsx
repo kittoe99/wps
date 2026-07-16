@@ -26,14 +26,14 @@ export default function Footer() {
                 </span>
               </Link>
               <p className="text-sm max-w-md text-white">
-                Minimal canvas programs for teams that want gallery-grade finishes without the agency overhead.
+                One subscription for your website, AI chatbot, Google reviews, and phone answering — built for local businesses.
               </p>
             </div>
             <Link
-              href="/dashboard"
+              href="/#contact"
               className="inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold text-neutral-900 bg-white hover:bg-neutral-100 transition-all duration-300 shadow-md hover:shadow-lg"
             >
-              Start a build
+              Get started
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="h-4 w-4">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
@@ -44,32 +44,72 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-12 text-sm">
           <div>
             <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider">
-              <span className="text-white">Services</span>
+              <span className="text-white">What we do</span>
             </h4>
             <ul className="space-y-3">
               <li>
-                <Link href="/canvas-printing" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
-                  <span>Custom Canvas Sets</span>
+                <Link href="/#services" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
+                  <span>Website</span>
                   <svg className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                   </svg>
                 </Link>
               </li>
               <li>
-                <Link href="/canvas-printing" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
-                  <span>Gallery Installations</span>
+                <Link href="/#services" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
+                  <span>AI Chatbot</span>
                   <svg className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                   </svg>
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
-                  <span>Limited Artist Drops</span>
+                <Link href="/#services" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
+                  <span>Reviews Generator</span>
                   <svg className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                   </svg>
                 </Link>
+              </li>
+              <li>
+                <Link href="/#services" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
+                  <span>AI Phone Answering</span>
+                  <svg className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider">
+              <span className="text-white">Company</span>
+            </h4>
+            <ul className="space-y-3">
+              <li>
+                <Link href="/" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
+                  <span>About</span>
+                  <svg className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              </li>
+              <li>
+                <Link href="/#contact" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
+                  <span>Contact</span>
+                  <svg className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              </li>
+              <li>
+                <a href="#" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
+                  <span>Privacy</span>
+                  <svg className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
               </li>
             </ul>
           </div>
@@ -80,48 +120,8 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3">
               <li>
-                <Link href="/dashboard" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
-                  <span>Pricing Builder</span>
-                  <svg className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
-                  <span>Fabrication Guide</span>
-                  <svg className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
-                  <span>Aftercare & Logistics</span>
-                  <svg className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider">
-              <span className="text-white">Studio</span>
-            </h4>
-            <ul className="space-y-3">
-              <li>
-                <Link href="/contact" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
-                  <span>Press</span>
-                  <svg className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
-              </li>
-              <li>
                 <a href="#" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
-                  <span>Journal</span>
+                  <span>Blog</span>
                   <svg className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                   </svg>
@@ -129,7 +129,15 @@ export default function Footer() {
               </li>
               <li>
                 <a href="#" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
-                  <span>Careers</span>
+                  <span>Support</span>
+                  <svg className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
+                  <span>Terms</span>
                   <svg className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                   </svg>
@@ -144,13 +152,7 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3 text-white/70">
               <li>
-                <a href="mailto:studio@wpscanvas.com" className="hover:text-white transition-colors">studio@wpscanvas.com</a>
-              </li>
-              <li>
-                <a href="tel:+14155550123" className="hover:text-white transition-colors">+1 (415) 555-0123</a>
-              </li>
-              <li>
-                <span className="block">Mon–Fri · 9a–6p PT</span>
+                <a href="mailto:hello@wpscanvas.com" className="hover:text-white transition-colors">hello@wpscanvas.com</a>
               </li>
             </ul>
           </div>

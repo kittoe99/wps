@@ -188,3 +188,215 @@ label,
   background-size: 200% 200%;
   animation: gradient 3s ease infinite;
 }
+
+/* Anthropic-inspired editorial system (adapted for WPScanvas) */
+:root {
+  --anthropic-slate: #141413;
+  --anthropic-slate-medium: #3d3d3a;
+  --anthropic-cloud: #b0aea5;
+  --anthropic-stone: #cccbc8;
+  --anthropic-ivory: #f0eee6;
+  --anthropic-ivory-light: #faf9f5;
+  --anthropic-clay: #d97757;
+}
+
+.u-container {
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .u-container {
+    padding-inline: 2.5rem;
+  }
+}
+
+.font-serif-editorial {
+  font-family: var(--font-source-serif), Georgia, "Times New Roman", serif;
+}
+
+.font-sans-ui {
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+.text-display-serif {
+  font-family: var(--font-source-serif), Georgia, "Times New Roman", serif;
+  font-size: clamp(2.25rem, 4.5vw, 4.25rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--anthropic-slate);
+}
+
+.text-body-editorial {
+  font-family: var(--font-source-serif), Georgia, "Times New Roman", serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--anthropic-slate-medium);
+}
+
+.text-section-label {
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--anthropic-slate);
+}
+
+.text-card-heading {
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--anthropic-slate);
+}
+
+.text-meta-label {
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--anthropic-cloud);
+}
+
+.text-meta-value {
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--anthropic-slate);
+}
+
+.link-editorial {
+  font-family: var(--font-source-serif), Georgia, "Times New Roman", serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--anthropic-slate);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--anthropic-stone);
+  transition: text-decoration-color 0.2s ease;
+}
+
+.link-editorial:hover {
+  text-decoration-color: var(--anthropic-slate);
+}
+
+.btn-pill-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  background-color: var(--anthropic-slate);
+  padding: 0.625rem 1.25rem;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #fff;
+  transition: background-color 0.2s ease;
+}
+
+.btn-pill-dark:hover {
+  background-color: var(--anthropic-slate-medium);
+}
+
+.card-manilla {
+  background-color: #ece4d9;
+  border-radius: 1rem;
+}
+
+.text-hero-display {
+  font-family: var(--font-source-serif), Georgia, "Times New Roman", serif;
+  font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--anthropic-slate);
+}
+
+.btn-pill-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid var(--anthropic-stone);
+  background-color: transparent;
+  padding: 0.625rem 1.25rem;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--anthropic-slate);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-pill-outline:hover {
+  border-color: var(--anthropic-slate);
+  background-color: rgba(20, 20, 19, 0.03);
+}
+
+.text-hero-sans {
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(2rem, 4.5vw, 3.75rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: var(--anthropic-slate);
+}
+
+.hero-underline {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.15em;
+  text-decoration-color: var(--anthropic-slate);
+}
+
+.card-hero-dark {
+  background-color: var(--anthropic-slate);
+  border-radius: 1.5rem;
+  color: #fff;
+}
+
+.card-hero-dark h2 {
+  color: #fff;
+  font-family: var(--font-source-serif), Georgia, "Times New Roman", serif;
+  font-size: clamp(1.875rem, 3.5vw, 2.75rem);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+}
+
+.card-hero-dark p {
+  color: rgba(255, 255, 255, 0.82);
+  font-family: var(--font-source-serif), Georgia, "Times New Roman", serif;
+  font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.5;
+  max-width: 42rem;
+}
+
+.card-hero-dark a {
+  color: #fff;
+  font-family: var(--font-source-serif), Georgia, "Times New Roman", serif;
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.4;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-color: rgba(255, 255, 255, 0.45);
+  transition: text-decoration-color 0.2s ease;
+}
+
+.card-hero-dark a:hover {
+  text-decoration-color: #fff;
+}
+
+@media (min-width: 768px) {
+  .card-hero-dark {
+    border-radius: 2rem;
+  }
+}
