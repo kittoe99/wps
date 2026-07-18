@@ -88,9 +88,9 @@ const features = [
 
 export default function AiPhoneAgentPage() {
   return (
-    <main className="min-h-screen bg-[#f9f6f1]">
+    <main className="min-h-screen bg-[#fcfaf8]">
       {/* Hero — The Problem */}
-      <section className="bg-[#f9f6f1] border-b border-[#cccbc8]">
+      <section className="bg-[#fcfaf8] border-b border-[#dbd9d7]">
         <div className="u-container pt-14 md:pt-20 lg:pt-24 pb-10 md:pb-14">
           <div className="grid lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] gap-8 lg:gap-14 xl:gap-20 items-start">
             <h1 className="text-hero-sans max-w-3xl">
@@ -105,7 +105,7 @@ export default function AiPhoneAgentPage() {
       </section>
 
       {/* The Gap */}
-      <section className="bg-[#f9f6f1]">
+      <section className="bg-[#fcfaf8]">
         <div className="u-container py-12 md:py-16">
           <div className="card-hero-dark px-8 md:px-12 lg:px-16 py-12 md:py-16 lg:py-20">
             <h2>Hiring a receptionist doesn&apos;t scale. Letting calls ring out is worse.</h2>
@@ -121,7 +121,7 @@ export default function AiPhoneAgentPage() {
       </section>
 
       {/* The WPScanvas Solution */}
-      <section id="capabilities" className="bg-[#f9f6f1] border-t border-[#cccbc8]">
+      <section id="capabilities" className="bg-[#fcfaf8] border-t border-[#dbd9d7]">
         <div className="u-container py-16 md:py-24 lg:py-28">
           <h2 className="text-section-label mb-4">
             An AI agent that answers, books, and follows up —{" "}
@@ -149,14 +149,14 @@ export default function AiPhoneAgentPage() {
       </section>
 
       {/* Service Deep-Dives */}
-      <section className="bg-[#f9f6f1] border-t border-[#cccbc8]">
+      <section className="bg-[#fcfaf8] border-t border-[#dbd9d7]">
         <div className="u-container py-16 md:py-24 lg:py-28">
           <h2 className="text-section-label mb-10 md:mb-14">How It Works</h2>
           <div className="space-y-8">
             {services.map((service) => (
               <article
                 key={service.title}
-                className="border border-[#cccbc8] rounded-2xl p-6 md:p-8 bg-white"
+                className="border border-[#dbd9d7] rounded-2xl p-6 md:p-8 bg-white"
               >
                 <h3 className="font-sans-ui text-lg md:text-xl font-semibold leading-tight text-[#141413] mb-3">
                   {service.title}
@@ -171,19 +171,19 @@ export default function AiPhoneAgentPage() {
       </section>
 
       {/* The 7 Core Features */}
-      <section className="bg-[#f9f6f1] border-t border-[#cccbc8]">
+      <section className="bg-[#fcfaf8] border-t border-[#dbd9d7]">
         <div className="u-container py-16 md:py-24 lg:py-28">
           <h2 className="text-section-label mb-4">The 7 Core Capabilities</h2>
           <p className="font-sans-ui text-sm md:text-[0.875rem] leading-relaxed text-[#6b6b6b] max-w-xl mb-10 md:mb-14">
             Every AI phone agent deployment includes these seven capabilities as standard — no
             add-ons, no per-feature pricing.
           </p>
-          <div className="border-t border-[#cccbc8]">
+          <div className="border-t border-[#dbd9d7]">
             {features.map((feature, index) => (
               <div
                 key={feature.label}
                 className={`flex items-start justify-between gap-6 py-5 ${
-                  index < features.length - 1 ? "border-b border-[#cccbc8]" : ""
+                  index < features.length - 1 ? "border-b border-[#dbd9d7]" : ""
                 }`}
               >
                 <span className="font-sans-ui text-base md:text-lg font-semibold text-[#141413] shrink-0 w-1/3 md:w-1/4">
@@ -199,7 +199,7 @@ export default function AiPhoneAgentPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[#f9f6f1] border-t border-[#cccbc8]">
+      <section className="bg-[#fcfaf8] border-t border-[#dbd9d7]">
         <div className="u-container py-12 md:py-16 text-center">
           <Link href="/contact" className="btn-pill-dark">
             Get your AI phone agent

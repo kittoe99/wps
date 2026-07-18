@@ -33,7 +33,7 @@ export default function Header() {
   }, [])
 
   return (
-    <header className="sticky top-0 border-b border-[#cccbc8] bg-[#f9f6f1]/95 backdrop-blur-sm z-[100]">
+    <header className="sticky top-0 border-b border-[#dbd9d7] bg-[#fcfaf8]/95 backdrop-blur-sm z-[100]">
       <nav className="u-container relative z-[100]">
         <div className="flex items-center justify-between h-16 gap-4">
           {/* Logo */}
@@ -215,7 +215,7 @@ export default function Header() {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="absolute top-full left-0 right-0 bg-[#f9f6f1] z-[110] md:hidden border-b border-[#cccbc8]">
+        <div className="absolute top-full left-0 right-0 bg-[#fcfaf8] z-[110] md:hidden border-b border-[#dbd9d7]">
           {/* Navigation */}
           <nav className="px-4 py-4 space-y-1 max-h-[70vh] overflow-y-auto">
             {/* Home */}

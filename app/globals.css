@@ -2,10 +2,10 @@
 
 :root {
   /* Light, near-neutral background system */
-  --bg-page: #f9f8f6;
+  --bg-page: #fcfbfa;
   --panel: #f9f9f9;
   --panel-hover: #f5f5f5;
-  --border: #e5e5e5;
+  --border: #efefef;
   --accent: #d97759;
   --background: var(--bg-page);
   --foreground: #0a0a0a;
@@ -45,7 +45,7 @@
   --color-page: #fefefe;
   --color-panel: #f9f9f9;
   --color-panel-hover: #f5f5f5;
-  --color-border: #e5e5e5;
+  --color-border: #efefef;
   --color-soft: #e5e7eb;
   --color-primary: #0a0a0a;
   --color-secondary: #525252;
@@ -194,7 +194,7 @@ label,
   --anthropic-slate: #141413;
   --anthropic-slate-medium: #3d3d3a;
   --anthropic-cloud: #b0aea5;
-  --anthropic-stone: #cccbc8;
+  --anthropic-stone: #dbd9d7;
   --anthropic-ivory: #f0eee6;
   --anthropic-ivory-light: #faf9f5;
   --anthropic-clay: #d97757;
@@ -305,7 +305,7 @@ label,
 }
 
 .card-manilla {
-  background-color: #ece4d9;
+  background-color: #f3efe7;
   border-radius: 1rem;
 }
 

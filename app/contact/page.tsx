@@ -9,9 +9,9 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-[#f9f6f1]">
+    <main className="min-h-screen bg-[#fcfaf8]">
       {/* Hero */}
-      <section className="bg-[#f9f6f1] border-b border-[#cccbc8]">
+      <section className="bg-[#fcfaf8] border-b border-[#dbd9d7]">
         <div className="u-container pt-14 md:pt-20 lg:pt-24 pb-10 md:pb-14">
           <div className="grid lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] gap-8 lg:gap-14 xl:gap-20 items-start">
             <h1 className="text-hero-sans max-w-3xl">
@@ -26,7 +26,7 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Options */}
-      <section className="bg-[#f9f6f1]">
+      <section className="bg-[#fcfaf8]">
         <div className="u-container py-16 md:py-24 lg:py-28">
           <div className="grid md:grid-cols-2 gap-8 md:gap-10">
             {/* Send a Message */}
@@ -51,7 +51,7 @@ export default function ContactPage() {
                       id="name"
                       name="name"
                       required
-                      className="w-full rounded-xl border border-[#cccbc8] bg-white px-4 py-3 font-sans-ui text-sm text-[#141413] placeholder:text-[#b0aea5] focus:border-[#141413] focus:ring-1 focus:ring-[#141413] focus:outline-none transition-all"
+                      className="w-full rounded-xl border border-[#dbd9d7] bg-white px-4 py-3 font-sans-ui text-sm text-[#141413] placeholder:text-[#b0aea5] focus:border-[#141413] focus:ring-1 focus:ring-[#141413] focus:outline-none transition-all"
                       placeholder="Your name"
                     />
                   </div>
@@ -64,7 +64,7 @@ export default function ContactPage() {
                       id="email"
                       name="email"
                       required
-                      className="w-full rounded-xl border border-[#cccbc8] bg-white px-4 py-3 font-sans-ui text-sm text-[#141413] placeholder:text-[#b0aea5] focus:border-[#141413] focus:ring-1 focus:ring-[#141413] focus:outline-none transition-all"
+                      className="w-full rounded-xl border border-[#dbd9d7] bg-white px-4 py-3 font-sans-ui text-sm text-[#141413] placeholder:text-[#b0aea5] focus:border-[#141413] focus:ring-1 focus:ring-[#141413] focus:outline-none transition-all"
                       placeholder="you@company.com"
                     />
                   </div>
@@ -78,7 +78,7 @@ export default function ContactPage() {
                     id="subject"
                     name="subject"
                     required
-                    className="w-full rounded-xl border border-[#cccbc8] bg-white px-4 py-3 font-sans-ui text-sm text-[#141413] placeholder:text-[#b0aea5] focus:border-[#141413] focus:ring-1 focus:ring-[#141413] focus:outline-none transition-all"
+                    className="w-full rounded-xl border border-[#dbd9d7] bg-white px-4 py-3 font-sans-ui text-sm text-[#141413] placeholder:text-[#b0aea5] focus:border-[#141413] focus:ring-1 focus:ring-[#141413] focus:outline-none transition-all"
                     placeholder="What's this about?"
                   />
                 </div>
@@ -91,7 +91,7 @@ export default function ContactPage() {
                     name="message"
                     required
                     rows={5}
-                    className="w-full rounded-xl border border-[#cccbc8] bg-white px-4 py-3 font-sans-ui text-sm text-[#141413] placeholder:text-[#b0aea5] focus:border-[#141413] focus:ring-1 focus:ring-[#141413] focus:outline-none transition-all resize-y"
+                    className="w-full rounded-xl border border-[#dbd9d7] bg-white px-4 py-3 font-sans-ui text-sm text-[#141413] placeholder:text-[#b0aea5] focus:border-[#141413] focus:ring-1 focus:ring-[#141413] focus:outline-none transition-all resize-y"
                     placeholder="Tell us about your project, your questions, or just say hi."
                   />
                 </div>
@@ -124,7 +124,7 @@ export default function ContactPage() {
               </div>
 
               {/* Email */}
-              <div className="border border-[#cccbc8] rounded-2xl p-6 md:p-8 bg-white">
+              <div className="border border-[#dbd9d7] rounded-2xl p-6 md:p-8 bg-white">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#d97759]/10 mb-5">
                   <svg className="w-6 h-6 text-[#d97759]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
@@ -149,7 +149,7 @@ export default function ContactPage() {
       </section>
 
       {/* FAQ quick-links */}
-      <section className="bg-[#f9f6f1] border-t border-[#cccbc8]">
+      <section className="bg-[#fcfaf8] border-t border-[#dbd9d7]">
         <div className="u-container py-16 md:py-24 lg:py-28">
           <h2 className="text-section-label mb-10 md:mb-14">Common questions</h2>
           <div className="grid md:grid-cols-2 gap-8">
