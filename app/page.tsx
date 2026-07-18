@@ -116,7 +116,7 @@ export default function Home() {
                   { label: "Category", value: service.tag },
                   { label: "Features", value: service.points.join(", ") },
                 ]}
-                href="#contact"
+                href="/contact"
                 cta="Learn more"
               />
             ))}

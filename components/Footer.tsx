@@ -30,7 +30,7 @@ export default function Footer() {
               </p>
             </div>
             <Link
-              href="/#contact"
+              href="/contact"
               className="inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold text-neutral-900 bg-white hover:bg-neutral-100 transition-all duration-300 shadow-md hover:shadow-lg"
             >
               Get started
@@ -48,7 +48,7 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3">
               <li>
-                <Link href="/#services" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
+                <Link href="/websites" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
                   <span>Website</span>
                   <svg className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
@@ -56,7 +56,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/#services" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
+                <Link href="/ai-chatbot" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
                   <span>AI Chatbot</span>
                   <svg className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
@@ -64,7 +64,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/#services" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
+                <Link href="/reviews-generator" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
                   <span>Reviews Generator</span>
                   <svg className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
@@ -72,7 +72,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/#services" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
+                <Link href="/ai-phone-agent" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
                   <span>AI Phone Answering</span>
                   <svg className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
@@ -96,7 +96,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/#contact" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
+                <Link href="/contact" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
                   <span>Contact</span>
                   <svg className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />

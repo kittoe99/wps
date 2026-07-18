@@ -100,8 +100,9 @@ export default function Header() {
                 </svg>
               </button>
               {productsOpen && (
-                <div className="absolute top-full left-0 mt-2 w-64 bg-white border border-neutral-300 rounded-xl shadow-2xl py-2 z-[110]">
-                  <Link href="/#services" className="flex items-center gap-3 px-4 py-3 hover:bg-[#d97759]/10 rounded-lg mx-2 transition-colors" onClick={() => setProductsOpen(false)}>
+                <div className="absolute top-full left-0 pt-2 z-[110]">
+                  <div className="w-64 bg-white border border-neutral-300 rounded-xl shadow-2xl py-2">
+                  <Link href="/websites" className="flex items-center gap-3 px-4 py-3 hover:bg-[#d97759]/10 rounded-lg mx-2 transition-colors" onClick={() => setProductsOpen(false)}>
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#d97759]/10">
                       <svg className="w-5 h-5 text-[#d97759]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
@@ -112,7 +113,7 @@ export default function Header() {
                       <div className="text-xs text-neutral-500">Custom sites, hosted & maintained</div>
                     </div>
                   </Link>
-                  <Link href="/#services" className="flex items-center gap-3 px-4 py-3 hover:bg-[#d97759]/10 rounded-lg mx-2 transition-colors" onClick={() => setProductsOpen(false)}>
+                  <Link href="/ai-chatbot" className="flex items-center gap-3 px-4 py-3 hover:bg-[#d97759]/10 rounded-lg mx-2 transition-colors" onClick={() => setProductsOpen(false)}>
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#d97759]/10">
                       <svg className="w-5 h-5 text-[#d97759]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
@@ -123,7 +124,7 @@ export default function Header() {
                       <div className="text-xs text-neutral-500">24/7 lead capture & booking</div>
                     </div>
                   </Link>
-                  <Link href="/#services" className="flex items-center gap-3 px-4 py-3 hover:bg-[#d97759]/10 rounded-lg mx-2 transition-colors" onClick={() => setProductsOpen(false)}>
+                  <Link href="/reviews-generator" className="flex items-center gap-3 px-4 py-3 hover:bg-[#d97759]/10 rounded-lg mx-2 transition-colors" onClick={() => setProductsOpen(false)}>
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#d97759]/10">
                       <svg className="w-5 h-5 text-[#d97759]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
@@ -134,7 +135,7 @@ export default function Header() {
                       <div className="text-xs text-neutral-500">Automated Google reviews</div>
                     </div>
                   </Link>
-                  <Link href="/#services" className="flex items-center gap-3 px-4 py-3 hover:bg-[#d97759]/10 rounded-lg mx-2 transition-colors" onClick={() => setProductsOpen(false)}>
+                  <Link href="/ai-phone-agent" className="flex items-center gap-3 px-4 py-3 hover:bg-[#d97759]/10 rounded-lg mx-2 transition-colors" onClick={() => setProductsOpen(false)}>
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#d97759]/10">
                       <svg className="w-5 h-5 text-[#d97759]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
@@ -145,6 +146,7 @@ export default function Header() {
                       <div className="text-xs text-neutral-500">Never miss a call again</div>
                     </div>
                   </Link>
+                  </div>
                 </div>
               )}
             </div>
@@ -155,7 +157,7 @@ export default function Header() {
               Work
             </Link>
             <Link 
-              href="/#contact" 
+              href="/contact" 
               className="text-sm font-medium text-[#d97759] hover:text-[#c46a4f] transition-colors"
             >
               Contact
@@ -189,7 +191,7 @@ export default function Header() {
               Sign in
             </Link>
             <Link 
-              href="/#contact"
+              href="/contact"
               className="rounded-lg px-4 py-2 text-sm font-medium text-white bg-neutral-900 hover:bg-neutral-800 transition-colors shadow-sm"
             >
               Get Started
@@ -245,22 +247,22 @@ export default function Header() {
               {productsExpanded && (
                 <div className="mt-1 ml-2 space-y-1 overflow-hidden">
                   <Link 
-                    href="/#services"
+                    href="/reviews-generator"
                     className="flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-white group transition-colors"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#d97759]/10 flex-shrink-0">
                       <svg className="w-4 h-4 text-[#d97759]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
                       </svg>
                     </div>
                     <div>
-                      <div className="text-sm font-medium text-neutral-900">Website</div>
-                      <div className="text-xs text-neutral-500">Custom sites, hosted & maintained</div>
+                      <div className="text-sm font-medium text-neutral-900">Reviews Generator</div>
+                      <div className="text-xs text-neutral-500">Automated Google reviews</div>
                     </div>
                   </Link>
                   <Link 
-                    href="/#services"
+                    href="/ai-chatbot"
                     className="flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-white group transition-colors"
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -275,7 +277,7 @@ export default function Header() {
                     </div>
                   </Link>
                   <Link 
-                    href="/#services"
+                    href="/ai-phone-agent"
                     className="flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-white group transition-colors"
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -302,7 +304,7 @@ export default function Header() {
               Work
             </Link>
             <Link 
-              href="/#contact"
+              href="/contact"
               className="block px-4 py-3 text-sm font-medium text-neutral-900 hover:bg-white rounded-lg transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
@@ -320,7 +322,7 @@ export default function Header() {
               Sign in
             </Link>
             <Link 
-              href="/#contact"
+              href="/contact"
               className="flex-1 rounded-lg py-2.5 text-center text-sm font-medium text-white bg-neutral-900 hover:bg-neutral-800 transition-all"
               onClick={() => setMobileMenuOpen(false)}
             >
