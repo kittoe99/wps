@@ -27,6 +27,16 @@
 github-ssh-public-key.pub
 github-ssh-fingerprint.txt
 
+# platform secrets
+platform/**/.env
+platform/**/.env.local
+platform/api/certs/*.crt
+!platform/api/certs/.gitkeep
+platform/edge/k8s/secret.yaml
+
+# Cursor MCP config may contain API keys
+.cursor/mcp.json
+
 # debug
 npm-debug.log*
 yarn-debug.log*

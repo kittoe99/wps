@@ -63,7 +63,9 @@ wps-canvas-nextjs/
 
 ## 🌐 Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new).
+The easiest way to deploy the marketing Next.js app is to use the [Vercel Platform](https://vercel.com/new).
+
+Customer static sites (`*.wpscanvas.com`) are served by the DigitalOcean multi-site platform — see [`platform/README.md`](platform/README.md).
 
 Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
