@@ -1,6 +1,13 @@
 import Link from "next/link"
 import { contact, hero, portfolio, services } from '@/lib/site-content'
 
+const serviceHrefs: Record<string, string> = {
+  website: "/websites",
+  chatbot: "/ai-chatbot",
+  reviews: "/reviews-generator",
+  phone: "/ai-phone-agent",
+}
+
 const featuredServices = services.slice(0, 3)
 const phoneService = services.find((s) => s.id === "phone")!
 
@@ -54,17 +61,19 @@ function ListRow({ title, category, href }: { title: string; category: string; h
       href={href}
       className="flex items-center justify-between gap-6 py-5 border-b border-[#dbd9d7] group"
     >
-      <span className="font-sans-ui text-base md:text-lg font-semibold text-[#141413] group-hover:opacity-70 transition-opacity">
+      <span className="font-sans-ui text-base md:text-lg font-semibold text-[#141413] transition-transform duration-200 group-hover:translate-x-1">
         {title}
       </span>
-      <span className="font-sans-ui text-sm text-[#b0aea5] text-right shrink-0">{category}</span>
+      <span className="font-sans-ui text-sm text-[#b0aea5] text-right shrink-0 transition-colors duration-200 group-hover:text-[#141413]">
+        {category}
+      </span>
     </Link>
   )
 }
 
 export default function Home() {
   const listItems = [
-    { title: phoneService.title, category: phoneService.tag, href: "#contact" },
+    { title: phoneService.title, category: phoneService.tag, href: serviceHrefs[phoneService.id] },
     ...portfolio.map((site) => {
       const [category] = site.desc.split(" — ")
       return { title: site.name, category, href: "#contact" }
@@ -77,12 +86,12 @@ export default function Home() {
       <section className="bg-[#fcfaf8]">
         <div className="u-container pt-14 md:pt-20 lg:pt-24 pb-10 md:pb-14">
           <div className="grid lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] gap-8 lg:gap-14 xl:gap-20 items-start">
-            <h1 className="text-hero-sans max-w-3xl">
+            <h1 className="text-hero-sans max-w-3xl animate-fade-in">
               A{" "}
               <span className="hero-underline">website</span> that runs your{" "}
               <span className="hero-underline">business</span> while you sleep
             </h1>
-            <p className="font-serif-editorial text-lg md:text-xl leading-[1.45] text-[#141413] lg:pt-6 xl:pt-10 max-w-md lg:max-w-none">
+            <p className="font-serif-editorial text-lg md:text-xl leading-[1.45] text-[#141413] lg:pt-6 xl:pt-10 max-w-md lg:max-w-none animate-fade-in-delayed">
               {hero.body}
             </p>
           </div>
@@ -116,7 +125,7 @@ export default function Home() {
                   { label: "Category", value: service.tag },
                   { label: "Features", value: service.points.join(", ") },
                 ]}
-                href="/contact"
+                href={serviceHrefs[service.id]}
                 cta="Learn more"
               />
             ))}

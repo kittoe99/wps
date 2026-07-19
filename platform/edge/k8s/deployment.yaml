@@ -1,0 +1,120 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edge-nginx
+  namespace: wps-edge
+  labels:
+    app: edge-nginx
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: edge-nginx
+  template:
+    metadata:
+      labels:
+        app: edge-nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+          ports:
+            - name: http
+              containerPort: 80
+            - name: health
+              containerPort: 8080
+          volumeMounts:
+            - name: sites
+              mountPath: /var/www/sites
+            - name: nginx-config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: health
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: health
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: "1"
+              memory: 512Mi
+        - name: sync
+          image: wps-edge-sync:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - secretRef:
+                name: edge-secrets
+          env:
+            - name: SITE_ROOT
+              value: /var/www/sites
+          volumeMounts:
+            - name: sites
+              mountPath: /var/www/sites
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+      volumes:
+        - name: sites
+          emptyDir:
+            sizeLimit: 20Gi
+        - name: nginx-config
+          configMap:
+            name: nginx-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: edge-nginx
+  namespace: wps-edge
+  annotations:
+    service.beta.kubernetes.io/do-loadbalancer-name: "wps-sites-edge-lb"
+    service.beta.kubernetes.io/do-loadbalancer-protocol: "http"
+    service.beta.kubernetes.io/do-loadbalancer-size-unit: "1"
+    service.beta.kubernetes.io/do-loadbalancer-healthcheck-path: "/healthz"
+    service.beta.kubernetes.io/do-loadbalancer-healthcheck-port: "8080"
+    service.beta.kubernetes.io/do-loadbalancer-redirect-http-to-https: "true"
+spec:
+  type: LoadBalancer
+  selector:
+    app: edge-nginx
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+    - name: health
+      port: 8080
+      targetPort: health
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: edge-nginx
+  namespace: wps-edge
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: edge-nginx
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70

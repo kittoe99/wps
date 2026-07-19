@@ -151,12 +151,6 @@ export default function Header() {
               )}
             </div>
             <Link 
-              href="/#work" 
-              className="text-sm font-medium text-[#d97759] hover:text-[#c46a4f] transition-colors"
-            >
-              Work
-            </Link>
-            <Link 
               href="/contact" 
               className="text-sm font-medium text-[#d97759] hover:text-[#c46a4f] transition-colors"
             >
@@ -215,7 +209,7 @@ export default function Header() {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="absolute top-full left-0 right-0 bg-[#fcfaf8] z-[110] md:hidden border-b border-[#dbd9d7]">
+        <div className="absolute top-full left-0 right-0 bg-white z-[110] md:hidden border-b border-[#dbd9d7]">
           {/* Navigation */}
           <nav className="px-4 py-4 space-y-1 max-h-[70vh] overflow-y-auto">
             {/* Home */}

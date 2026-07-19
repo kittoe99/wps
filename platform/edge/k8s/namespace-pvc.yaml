@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: wps-edge
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sites-cache
+  namespace: wps-edge
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: do-block-storage

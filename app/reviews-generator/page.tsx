@@ -93,11 +93,11 @@ export default function ReviewsGeneratorPage() {
       <section className="bg-[#fcfaf8] border-b border-[#dbd9d7]">
         <div className="u-container pt-14 md:pt-20 lg:pt-24 pb-10 md:pb-14">
           <div className="grid lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] gap-8 lg:gap-14 xl:gap-20 items-start">
-            <h1 className="text-hero-sans max-w-3xl">
+            <h1 className="text-hero-sans max-w-3xl animate-fade-in">
               Your best customers love you.{" "}
               <span className="hero-underline">They just don't leave reviews</span>
             </h1>
-            <p className="font-sans-ui text-base md:text-[0.9375rem] leading-relaxed text-[#3d3d3a] lg:pt-6 xl:pt-10 max-w-md lg:max-w-none">
+            <p className="font-sans-ui text-base md:text-[0.9375rem] leading-relaxed text-[#3d3d3a] lg:pt-6 xl:pt-10 max-w-md lg:max-w-none animate-fade-in-delayed">
               The average business serves hundreds of satisfied customers every month. But fewer than 5% ever leave a review — not because they're unhappy, but because the process is inconvenient. Meanwhile, a competitor with 50 reviews and a 4.8 rating is stealing your traffic, even if your service is better. The problem isn't your quality. It's your ask.
             </p>
           </div>

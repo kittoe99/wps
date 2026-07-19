@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8088:80"
+      - "8089:8080"
+    volumes:
+      - sites-data:/var/www/sites
+    depends_on:
+      - sync
+  sync:
+    build:
+      context: ./sync
+    env_file:
+      - .env
+    environment:
+      SITE_ROOT: /var/www/sites
+    volumes:
+      - sites-data:/var/www/sites
+
+volumes:
+  sites-data:

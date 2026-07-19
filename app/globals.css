@@ -52,11 +52,26 @@
   --color-tertiary: #737373;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+/* Offset anchor jumps for the sticky header */
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
 html,
 body {
   background-color: var(--bg-page);
   overscroll-behavior-y: contain;
   touch-action: pan-y;
+}
+
+/* Brand-tinted text selection */
+::selection {
+  background-color: var(--accent-muted);
+  color: var(--anthropic-slate);
 }
 
 body {
@@ -181,7 +196,21 @@ label,
 }
 
 .animate-fade-in {
-  animation: fade-in 0.6s ease-out;
+  animation: fade-in 0.6s ease-out both;
+}
+
+.animate-fade-in-delayed {
+  animation: fade-in 0.6s ease-out 0.15s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-fade-in,
+  .animate-fade-in-delayed {
+    animation: none;
+  }
 }
 
 .animate-gradient {
@@ -304,9 +333,29 @@ label,
   background-color: var(--anthropic-slate-medium);
 }
 
+/* Arrow nudge on interactive elements */
+.btn-pill-dark span[aria-hidden="true"],
+.btn-pill-outline span[aria-hidden="true"],
+.card-hero-dark a span[aria-hidden="true"] {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.btn-pill-dark:hover span[aria-hidden="true"],
+.btn-pill-outline:hover span[aria-hidden="true"],
+.card-hero-dark a:hover span[aria-hidden="true"] {
+  transform: translateX(3px);
+}
+
 .card-manilla {
   background-color: #f3efe7;
   border-radius: 1rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card-manilla:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -16px rgba(20, 20, 19, 0.18);
 }
 
 .text-hero-display {
@@ -357,8 +406,10 @@ label,
 
 .card-hero-dark {
   background-color: var(--anthropic-slate);
+  background-image: radial-gradient(ellipse 70% 90% at 85% 0%, rgba(217, 119, 89, 0.14), transparent 70%);
   border-radius: 1.5rem;
   color: #fff;
+  box-shadow: 0 24px 48px -28px rgba(20, 20, 19, 0.4);
 }
 
 .card-hero-dark h2 {

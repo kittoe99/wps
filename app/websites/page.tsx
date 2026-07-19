@@ -93,11 +93,11 @@ export default function WebsitesPage() {
       <section className="bg-[#fcfaf8] border-b border-[#dbd9d7]">
         <div className="u-container pt-14 md:pt-20 lg:pt-24 pb-10 md:pb-14">
           <div className="grid lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] gap-8 lg:gap-14 xl:gap-20 items-start">
-            <h1 className="text-hero-sans max-w-3xl">
+            <h1 className="text-hero-sans max-w-3xl animate-fade-in">
               Most websites are{" "}
               <span className="hero-underline">digital fossils</span>
             </h1>
-            <p className="font-sans-ui text-base md:text-[0.9375rem] leading-relaxed text-[#3d3d3a] lg:pt-6 xl:pt-10 max-w-md lg:max-w-none">
+            <p className="font-sans-ui text-base md:text-[0.9375rem] leading-relaxed text-[#3d3d3a] lg:pt-6 xl:pt-10 max-w-md lg:max-w-none animate-fade-in-delayed">
               They are static, reactive, and fundamentally disconnected from how modern B2B buyers behave. Buyers expect instant answers, personalized experiences, and frictionless handoffs. Instead, they get contact forms that disappear into the void, chatbots that can&apos;t answer basic questions, and SEO strategies built for 2015.
             </p>
           </div>
