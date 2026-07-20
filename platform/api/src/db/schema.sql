@@ -85,3 +85,22 @@ CREATE TABLE IF NOT EXISTS site_integrations (
 );
 
 CREATE INDEX IF NOT EXISTS idx_site_integrations_site ON site_integrations (site_id);
+
+CREATE TABLE IF NOT EXISTS site_builds (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  site_id UUID NOT NULL REFERENCES sites(id) ON DELETE CASCADE,
+  status TEXT NOT NULL DEFAULT 'queued'
+    CHECK (status IN ('queued', 'running', 'published', 'failed')),
+  session_id TEXT NOT NULL,
+  version INT,
+  brief JSONB NOT NULL DEFAULT '{}',
+  summary TEXT,
+  error TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  started_at TIMESTAMPTZ,
+  finished_at TIMESTAMPTZ
+);
+
+CREATE INDEX IF NOT EXISTS idx_site_builds_site ON site_builds (site_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_site_builds_status ON site_builds (status);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_site_builds_session ON site_builds (session_id);

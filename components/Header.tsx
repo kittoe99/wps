@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import AuthNav from '@/components/AuthNav'
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -178,12 +179,7 @@ export default function Header() {
 
           {/* CTA */}
           <div className="hidden md:flex items-center gap-4 flex-shrink-0">
-            <Link 
-              href="/login"
-              className="text-sm font-medium text-[#d97759] hover:text-[#c46a4f] transition-colors"
-            >
-              Sign in
-            </Link>
+            <AuthNav />
             <Link 
               href="/contact"
               className="rounded-lg px-4 py-2 text-sm font-medium text-white bg-neutral-900 hover:bg-neutral-800 transition-colors shadow-sm"
@@ -291,6 +287,13 @@ export default function Header() {
 
             {/* Other Links */}
             <Link 
+              href="/builder"
+              className="block px-4 py-3 text-sm font-medium text-neutral-900 hover:bg-white rounded-lg transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Builder
+            </Link>
+            <Link 
               href="/#work"
               className="block px-4 py-3 text-sm font-medium text-neutral-900 hover:bg-white rounded-lg transition-colors"
               onClick={() => setMobileMenuOpen(false)}
@@ -308,13 +311,7 @@ export default function Header() {
 
           {/* Footer Actions */}
           <div className="px-4 py-4 border-t border-neutral-200 flex gap-2">
-            <Link 
-              href="/login"
-              className="flex-1 rounded-lg py-2.5 text-center text-sm font-medium text-neutral-900 border border-neutral-300 hover:bg-white transition-all"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Sign in
-            </Link>
+            <AuthNav mobile />
             <Link 
               href="/contact"
               className="flex-1 rounded-lg py-2.5 text-center text-sm font-medium text-white bg-neutral-900 hover:bg-neutral-800 transition-all"

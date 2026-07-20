@@ -5,6 +5,28 @@ const globalForDb = globalThis as unknown as {
   pool: Pool | undefined
 }
 
+/**
+ * Resolve the DigitalOcean Managed Postgres URL.
+ * Prefer DATABASE_URL; fall back to DO_POSTGRES_* (set on Vercel).
+ */
+export function resolveDatabaseUrl(): string {
+  if (process.env.DATABASE_URL) return process.env.DATABASE_URL
+
+  const host = process.env.DO_POSTGRES_HOST
+  const user = process.env.DO_POSTGRES_USER || "wps_canvas_app"
+  const password = process.env.DO_POSTGRES_PASSWORD
+  const port = process.env.DO_POSTGRES_PORT || "25060"
+  const database = process.env.DO_POSTGRES_DB || "defaultdb"
+
+  if (host && password) {
+    return `postgresql://${encodeURIComponent(user)}:${encodeURIComponent(password)}@${host}:${port}/${database}?sslmode=require`
+  }
+
+  throw new Error(
+    "DATABASE_URL (or DO_POSTGRES_HOST + DO_POSTGRES_PASSWORD) is not set — required for DigitalOcean Postgres"
+  )
+}
+
 function normalizeConnectionString(connectionString: string) {
   const url = new URL(connectionString)
   url.searchParams.delete("sslmode")
@@ -14,13 +36,8 @@ function normalizeConnectionString(connectionString: string) {
 }
 
 function createPool() {
-  const connectionString = process.env.DATABASE_URL
-  if (!connectionString) {
-    throw new Error("DATABASE_URL is not set")
-  }
-
   return new Pool({
-    connectionString: normalizeConnectionString(connectionString),
+    connectionString: normalizeConnectionString(resolveDatabaseUrl()),
     ssl: getDbSsl(),
     max: 5,
   })

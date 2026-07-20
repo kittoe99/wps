@@ -7,6 +7,7 @@ import { createUploadUrl, putObject, versionPrefix } from "../lib/spaces.js"
 import { activateVersion } from "../workers/publish.js"
 import { emitEvent } from "../lib/webhooks.js"
 import { getValkey } from "../lib/valkey.js"
+import { enqueueBuildJob } from "../workers/build.js"
 
 export const sitesRouter = Router()
 
@@ -246,4 +247,108 @@ sitesRouter.post("/:slug/publish", async (req, res) => {
 sitesRouter.delete("/:slug/cache", async (req, res) => {
   await invalidateSiteCache(req.params.slug.toLowerCase())
   res.json({ ok: true })
+})
+
+/** Queue an OpenClaw sandbox build for this site */
+sitesRouter.post("/:slug/build", async (req, res) => {
+  try {
+    const body = z
+      .object({
+        brief: z.object({
+          businessName: z.string().min(1),
+          industry: z.string().min(1),
+          tone: z.string().optional(),
+          researchUrls: z.array(z.string().url()).max(10).optional(),
+        }),
+        version: z.number().int().positive().optional(),
+      })
+      .parse(req.body)
+
+    const pool = getPool()
+    const slug = req.params.slug.toLowerCase()
+    const { rows } = await pool.query(
+      `SELECT id, current_version FROM sites WHERE slug = $1`,
+      [slug]
+    )
+    if (!rows[0]) {
+      res.status(404).json({ error: "Site not found" })
+      return
+    }
+
+    const siteId = rows[0].id as string
+    const version = body.version ?? (rows[0].current_version ?? 0) + 1
+    const buildIdRow = await pool.query(`SELECT gen_random_uuid() AS id`)
+    const buildId = buildIdRow.rows[0].id as string
+    const sessionId = `build-${siteId}-${version}`
+
+    await pool.query(
+      `INSERT INTO site_builds (id, site_id, status, session_id, version, brief)
+       VALUES ($1, $2, 'queued', $3, $4, $5)`,
+      [buildId, siteId, sessionId, version, JSON.stringify(body.brief)]
+    )
+
+    await enqueueBuildJob({
+      buildId,
+      siteId,
+      slug,
+      sessionId,
+      version,
+      brief: body.brief,
+    })
+
+    res.status(202).json({ buildId, sessionId, version, status: "queued" })
+  } catch (err) {
+    res.status(400).json({
+      error: err instanceof Error ? err.message : "Failed to queue build",
+    })
+  }
+})
+
+sitesRouter.get("/:slug/builds/:id", async (req, res) => {
+  const pool = getPool()
+  const slug = req.params.slug.toLowerCase()
+  const { rows } = await pool.query(
+    `SELECT b.id, b.status, b.session_id, b.version, b.brief, b.summary, b.error,
+            b.created_at, b.started_at, b.finished_at, s.slug
+     FROM site_builds b
+     JOIN sites s ON s.id = b.site_id
+     WHERE b.id = $1 AND s.slug = $2`,
+    [req.params.id, slug]
+  )
+  if (!rows[0]) {
+    res.status(404).json({ error: "Build not found" })
+    return
+  }
+  const b = rows[0]
+  res.json({
+    build: {
+      id: b.id,
+      status: b.status,
+      sessionId: b.session_id,
+      version: b.version,
+      brief: b.brief,
+      summary: b.summary,
+      error: b.error,
+      createdAt: b.created_at,
+      startedAt: b.started_at,
+      finishedAt: b.finished_at,
+      slug: b.slug,
+      publicUrl: `https://${b.slug}.${process.env.PUBLIC_SITE_DOMAIN || "wpscanvas.com"}`,
+    },
+  })
+})
+
+sitesRouter.get("/:slug/builds", async (req, res) => {
+  const pool = getPool()
+  const slug = req.params.slug.toLowerCase()
+  const { rows } = await pool.query(
+    `SELECT b.id, b.status, b.session_id, b.version, b.created_at, b.finished_at
+     FROM site_builds b
+     JOIN sites s ON s.id = b.site_id
+     WHERE s.slug = $1
+     ORDER BY b.created_at DESC
+     LIMIT 50`,
+    [slug]
+  )
+  res.json({ builds: rows })
 })
