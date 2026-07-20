@@ -5,7 +5,7 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-neutral-800 bg-neutral-950 py-16 md:py-20 text-white">
-      <div className="max-w-5xl mx-auto px-6 lg:px-8">
+      <div className="u-container">
         <div className="mb-12 pb-12 border-b border-neutral-800/80">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div>

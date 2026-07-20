@@ -92,12 +92,12 @@ export default function AiPhoneAgentPage() {
       {/* Hero — The Problem */}
       <section className="bg-[#fcfaf8] border-b border-[#dbd9d7]">
         <div className="u-container pt-14 md:pt-20 lg:pt-24 pb-10 md:pb-14">
-          <div className="grid lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] gap-8 lg:gap-14 xl:gap-20 items-start">
+          <div className="grid lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] gap-5 md:gap-8 lg:gap-14 xl:gap-20 items-start">
             <h1 className="text-hero-sans max-w-3xl animate-fade-in">
               Every missed call is a{" "}
               <span className="hero-underline">missed customer</span>
             </h1>
-            <p className="font-sans-ui text-base md:text-[0.9375rem] leading-relaxed text-[#3d3d3a] lg:pt-6 xl:pt-10 max-w-md lg:max-w-none animate-fade-in-delayed">
+            <p className="font-sans-ui text-base md:text-[0.9375rem] leading-relaxed text-[#3d3d3a] lg:pt-6 xl:pt-10 animate-fade-in-delayed">
               Studies show 62% of business calls go to voicemail. Of those, fewer than 5% leave a message. The ones who do wait hours — sometimes days — for a callback, by which point they&apos;ve already called your competitor. The phone isn&apos;t dying. It&apos;s being neglected — and it&apos;s costing you more than you think.
             </p>
           </div>
@@ -107,7 +107,7 @@ export default function AiPhoneAgentPage() {
       {/* The Gap */}
       <section className="bg-[#fcfaf8]">
         <div className="u-container py-12 md:py-16">
-          <div className="card-hero-dark px-8 md:px-12 lg:px-16 py-12 md:py-16 lg:py-20">
+          <div className="card-hero-dark px-5 sm:px-8 md:px-12 lg:px-16 py-10 sm:py-12 md:py-16 lg:py-20">
             <h2>Hiring a receptionist doesn&apos;t scale. Letting calls ring out is worse.</h2>
             <p className="mt-5 md:mt-6">
               Front-desk staff call in sick. Answering services route your calls overseas to operators who have never seen your business. VoIP auto-attendants frustrate callers into hanging up. None of these are solutions — they&apos;re compromises dressed up as infrastructure. There&apos;s a better way.
@@ -182,14 +182,14 @@ export default function AiPhoneAgentPage() {
             {features.map((feature, index) => (
               <div
                 key={feature.label}
-                className={`flex items-start justify-between gap-6 py-5 ${
+                className={`flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-6 py-5 ${
                   index < features.length - 1 ? "border-b border-[#dbd9d7]" : ""
                 }`}
               >
-                <span className="font-sans-ui text-base md:text-lg font-semibold text-[#141413] shrink-0 w-1/3 md:w-1/4">
+                <span className="font-sans-ui text-base md:text-lg font-semibold text-[#141413] sm:shrink-0 sm:w-1/3 md:w-1/4">
                   {feature.label}
                 </span>
-                <span className="font-sans-ui text-sm text-[#3d3d3a] leading-relaxed">
+                <span className="font-sans-ui text-sm text-[#3d3d3a] leading-relaxed min-w-0 flex-1">
                   {feature.detail}
                 </span>
               </div>

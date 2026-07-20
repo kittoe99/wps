@@ -14,12 +14,12 @@ export default function ContactPage() {
       {/* Hero */}
       <section className="bg-[#fcfaf8] border-b border-[#dbd9d7]">
         <div className="u-container pt-14 md:pt-20 lg:pt-24 pb-10 md:pb-14">
-          <div className="grid lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] gap-8 lg:gap-14 xl:gap-20 items-start">
+          <div className="grid lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] gap-5 md:gap-8 lg:gap-14 xl:gap-20 items-start">
             <h1 className="text-hero-sans max-w-3xl animate-fade-in">
               Let&apos;s build{" "}
               <span className="hero-underline">something</span> together
             </h1>
-            <p className="font-sans-ui text-base md:text-[0.9375rem] leading-relaxed text-[#3d3d3a] lg:pt-6 xl:pt-10 max-w-md lg:max-w-none animate-fade-in-delayed">
+            <p className="font-sans-ui text-base md:text-[0.9375rem] leading-relaxed text-[#3d3d3a] lg:pt-6 xl:pt-10 animate-fade-in-delayed">
               {contact.headline}
             </p>
           </div>
