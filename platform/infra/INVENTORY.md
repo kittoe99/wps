@@ -9,6 +9,15 @@
 | Valkey | `2094c71b-2df0-4af5-b3b5-0eb806e82d0c` (`wps-platform-valkey`) | nyc3 | online |
 | DOKS | `b2f46004-a385-48b6-a615-7be664b5d9b7` (`wps-sites-edge`) | nyc3 | cluster created (nodes may still be provisioning); manifests in `platform/edge/k8s/` |
 | DNS zone | `wpscanvas.com` | — | zone created; `*`, `www`, `api` A records (placeholder IP until LB exists) |
+| Droplet | `585810927` (`wps-openclaw-builder`) | nyc3 | `s-2vcpu-4gb`, Ubuntu 24.04; OpenClaw gateway `:18789`; public IP `64.225.15.54` |
+| Firewall | `e802e54f-16af-4888-8971-6e2827b3b782` (`wps-openclaw-builder-fw`) | — | SSH + 18789 restricted to admin IP |
+
+## OpenClaw builder
+
+- Config: `/root/.openclaw/openclaw.json` on droplet — default model `moonshot/kimi-k3`, sandbox `mode: all` / `scope: session`, image `wps-site-builder-sandbox:latest`
+- Set `MOONSHOT_API_KEY` in `/opt/openclaw/.env` (Kimi Open Platform key), then restart gateway
+- Cursor MCP `OPENCLAW_URL=http://64.225.15.54:18789`
+- Platform: `POST /sites/:slug/build` → Valkey `build:jobs` → `npm run worker:build`
 
 ## Manual / script steps remaining
 

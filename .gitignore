@@ -52,3 +52,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local agent sandboxes and native build output
+.sandbox/
+native/**/build/
+packages/**/node_modules/

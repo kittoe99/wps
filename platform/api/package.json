@@ -8,7 +8,8 @@
     "start": "node dist/index.js",
     "build": "tsc",
     "db:init": "tsx scripts/init-db.ts",
-    "worker:publish": "tsx src/workers/publish-worker.ts"
+    "worker:publish": "tsx src/workers/publish-worker.ts",
+    "worker:build": "tsx src/workers/build-worker.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.787.0",

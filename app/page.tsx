@@ -1,164 +1,295 @@
-import Link from "next/link"
-import { contact, hero, portfolio, services } from '@/lib/site-content'
+"use client"
 
-const serviceHrefs: Record<string, string> = {
-  website: "/websites",
-  chatbot: "/ai-chatbot",
-  reviews: "/reviews-generator",
-  phone: "/ai-phone-agent",
+import { useCallback, useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import SplitLayout from "@/components/builder/SplitLayout"
+import ChatPanel from "@/components/builder/ChatPanel"
+import PreviewPanel, { type SelectedElement } from "@/components/builder/PreviewPanel"
+import { Loader2, LogOut, User, Plus, ChevronDown, Globe } from "lucide-react"
+
+const CURRENT_SITE_KEY = "wps-current-site"
+
+interface SiteInfo {
+  name: string
+  slug: string
+  createdAt: string
+  updatedAt: string
 }
 
-const featuredServices = services.slice(0, 3)
-const phoneService = services.find((s) => s.id === "phone")!
-
-function ReleaseCard({
-  title,
-  description,
-  meta,
-  href,
-  cta,
-}: {
-  title: string
-  description: string
-  meta: { label: string; value: string }[]
-  href: string
-  cta: string
-}) {
-  return (
-    <article className="card-manilla flex flex-col p-6 md:p-8">
-      <h4 className="font-serif-editorial text-2xl md:text-[1.75rem] leading-tight text-[#141413] mb-4">
-        {title}
-      </h4>
-      <p className="font-sans-ui text-sm md:text-[0.9375rem] leading-relaxed text-[#3d3d3a] flex-1">
-        {description}
-      </p>
-      <div className="mt-8 border-t border-[#dbd9d7]/70">
-        {meta.map((item, index) => (
-          <div
-            key={item.label}
-            className={`flex items-start justify-between gap-4 py-3 ${
-              index > 0 ? "border-t border-[#dbd9d7]/70" : ""
-            }`}
-          >
-            <span className="font-sans-ui text-[0.6875rem] uppercase tracking-[0.06em] text-[#87867f] shrink-0">
-              {item.label}
-            </span>
-            <span className="font-sans-ui text-sm text-[#141413] text-right">{item.value}</span>
-          </div>
-        ))}
-      </div>
-      <Link href={href} className="btn-pill-dark mt-8 w-fit">
-        {cta}
-        <span aria-hidden="true">→</span>
-      </Link>
-    </article>
-  )
+interface ApiSite {
+  slug: string
+  title?: string | null
+  businessName?: string | null
+  createdAt: string
+  updatedAt: string
 }
 
-function ListRow({ title, category, href }: { title: string; category: string; href: string }) {
-  return (
-    <Link
-      href={href}
-      className="flex items-center justify-between gap-6 py-5 border-b border-[#dbd9d7] group"
-    >
-      <span className="font-sans-ui text-base md:text-lg font-semibold text-[#141413] transition-transform duration-200 group-hover:translate-x-1">
-        {title}
-      </span>
-      <span className="font-sans-ui text-sm text-[#b0aea5] text-right shrink-0 transition-colors duration-200 group-hover:text-[#141413]">
-        {category}
-      </span>
-    </Link>
-  )
+function mapSite(s: ApiSite): SiteInfo {
+  return {
+    name: s.businessName || s.title || s.slug,
+    slug: s.slug,
+    createdAt: s.createdAt,
+    updatedAt: s.updatedAt,
+  }
 }
 
-export default function Home() {
-  const listItems = [
-    { title: phoneService.title, category: phoneService.tag, href: serviceHrefs[phoneService.id] },
-    ...portfolio.map((site) => {
-      const [category] = site.desc.split(" — ")
-      return { title: site.name, category, href: "#contact" }
-    }),
-  ]
+function slugify(name: string): string {
+  return name
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9-]/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "")
+}
+
+export default function BuilderPage() {
+  const router = useRouter()
+  const [isPreviewOpen, setIsPreviewOpen] = useState(true)
+  const [isChatCollapsed, setIsChatCollapsed] = useState(false)
+  const [previewHtml, setPreviewHtmlState] = useState("")
+  const [selectedElement, setSelectedElement] = useState<SelectedElement | null>(null)
+  const [user, setUser] = useState<{ name: string; email: string } | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [sites, setSites] = useState<SiteInfo[]>([])
+  const [currentSite, setCurrentSite] = useState<SiteInfo | null>(null)
+  const [showSitePicker, setShowSitePicker] = useState(false)
+  const [showNewSite, setShowNewSite] = useState(false)
+  const [newSiteName, setNewSiteName] = useState("")
+  const [creating, setCreating] = useState(false)
+
+  // Load sites
+  const loadSites = useCallback(async () => {
+    try {
+      const res = await fetch("/api/sites")
+      if (res.ok) {
+        const data = await res.json()
+        const list = (data.sites || []).map(mapSite)
+        setSites(list)
+        return list
+      }
+    } catch {}
+    return []
+  }, [])
+
+  // Restore or create current site
+  useEffect(() => {
+    const init = async () => {
+      const sitesList = await loadSites()
+      const saved = typeof window !== "undefined" ? localStorage.getItem(CURRENT_SITE_KEY) : null
+
+      if (saved) {
+        const found = sitesList.find((s: SiteInfo) => s.slug === saved)
+        if (found) {
+          setCurrentSite(found)
+          // Load preview for this site
+          fetch(`/api/session?site=${found.slug}`)
+            .then((r) => r.json())
+            .then((d) => { if (d.previewHtml) setPreviewHtmlState(d.previewHtml) })
+            .catch(() => {})
+          return
+        }
+      }
+
+      if (sitesList.length > 0) {
+        setCurrentSite(sitesList[0])
+        localStorage.setItem(CURRENT_SITE_KEY, sitesList[0].slug)
+        fetch(`/api/session?site=${sitesList[0].slug}`)
+          .then((r) => r.json())
+          .then((d) => { if (d.previewHtml) setPreviewHtmlState(d.previewHtml) })
+          .catch(() => {})
+      }
+    }
+    init()
+  }, [loadSites])
+
+  const setPreviewHtml = useCallback((html: string) => {
+    setPreviewHtmlState(html)
+  }, [])
+
+  // Auth check
+  useEffect(() => {
+    fetch("/api/auth/me")
+      .then((r) => r.json())
+      .then((d) => { if (!d.user) router.replace("/login"); else setUser(d.user) })
+      .catch(() => router.replace("/login"))
+      .finally(() => setLoading(false))
+  }, [router])
+
+  const switchSite = async (site: SiteInfo) => {
+    setCurrentSite(site)
+    setShowSitePicker(false)
+    localStorage.setItem(CURRENT_SITE_KEY, site.slug)
+    setPreviewHtmlState("")
+
+    // Load site preview
+    fetch(`/api/session?site=${site.slug}`)
+      .then((r) => r.json())
+      .then((d) => { if (d.previewHtml) setPreviewHtmlState(d.previewHtml) })
+      .catch(() => {})
+  }
+
+  const createSite = async () => {
+    if (!newSiteName.trim() || creating) return
+    setCreating(true)
+    try {
+      const res = await fetch("/api/sites", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slug: slugify(newSiteName.trim()), title: newSiteName.trim() }),
+      })
+      if (!res.ok) {
+        const err = await res.json()
+        throw new Error(err.error)
+      }
+      const data = await res.json()
+      const newSite = mapSite(data.site)
+      setSites((prev) => [newSite, ...prev])
+      setNewSiteName("")
+      setShowNewSite(false)
+      await switchSite(newSite)
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Failed to create site")
+    } finally {
+      setCreating(false)
+    }
+  }
+
+  const handleLogout = async () => {
+    await fetch("/api/auth/me", { method: "POST" })
+    try { localStorage.clear() } catch {}
+    router.replace("/login")
+  }
+
+  if (loading) {
+    return <div className="h-screen flex items-center justify-center bg-[#fcfbfa]"><Loader2 className="size-6 animate-spin text-[var(--accent)]" /></div>
+  }
+  if (!user) return null
 
   return (
-    <main className="min-h-screen bg-[#fcfaf8]">
-      {/* Hero */}
-      <section className="bg-[#fcfaf8]">
-        <div className="u-container pt-14 md:pt-20 lg:pt-24 pb-10 md:pb-14">
-          <div className="grid lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] gap-8 lg:gap-14 xl:gap-20 items-start">
-            <h1 className="text-hero-sans max-w-3xl animate-fade-in">
-              A{" "}
-              <span className="hero-underline">website</span> that runs your{" "}
-              <span className="hero-underline">business</span> while you sleep
-            </h1>
-            <p className="font-serif-editorial text-lg md:text-xl leading-[1.45] text-[#141413] lg:pt-6 xl:pt-10 max-w-md lg:max-w-none animate-fade-in-delayed">
-              {hero.body}
-            </p>
+    <div className="h-screen flex flex-col">
+      <div className="flex items-center justify-between px-3 sm:px-4 py-1.5 sm:py-2 border-b border-[var(--border)] bg-white shrink-0">
+        <div className="flex items-center gap-2 min-w-0 flex-1">
+          <div className="size-5 sm:size-6 rounded-md bg-[var(--accent)]/10 flex items-center justify-center shrink-0">
+            <span className="text-[0.6rem] sm:text-xs font-bold text-[var(--accent)]">W</span>
           </div>
+
+          {/* Site selector */}
+          <div className="relative min-w-0 flex-1">
+            <button
+              onClick={() => setShowSitePicker(!showSitePicker)}
+              className="flex items-center gap-1 px-1.5 sm:px-2 py-1 rounded-md hover:bg-[var(--panel-hover)] transition-colors max-w-full"
+            >
+              <span className="text-xs sm:text-sm font-semibold text-[var(--text-primary)] truncate">
+                {currentSite?.name || "No site"}
+              </span>
+              <ChevronDown className="size-2.5 sm:size-3 text-[var(--text-tertiary)] shrink-0" />
+            </button>
+
+            {showSitePicker && (
+              <>
+                <div className="fixed inset-0 z-10" onClick={() => setShowSitePicker(false)} />
+                <div className="absolute top-full left-0 mt-1 w-64 max-w-[calc(100vw-2rem)] bg-white rounded-lg border border-[var(--border)] shadow-lg z-20 py-1">
+                  <div className="px-3 py-1.5 text-[0.65rem] font-medium text-[var(--text-tertiary)] uppercase tracking-wider">
+                    Your Sites
+                  </div>
+                  {sites.map((s) => (
+                    <button
+                      key={s.slug}
+                      onClick={() => switchSite(s)}
+                      className={`w-full text-left px-3 py-2 text-sm transition-colors flex items-center gap-2 ${
+                        currentSite?.slug === s.slug
+                          ? "bg-[var(--accent-subtle)] text-[var(--accent)]"
+                          : "text-[var(--text-secondary)] hover:bg-[var(--panel-hover)]"
+                      }`}
+                    >
+                      <Globe className="size-3.5 shrink-0" />
+                      <span className="truncate">{s.name}</span>
+                      {currentSite?.slug === s.slug && (
+                        <span className="ml-auto text-[0.6rem] text-[var(--accent)]">active</span>
+                      )}
+                    </button>
+                  ))}
+                  <div className="border-t border-[var(--border)] mt-1 pt-1">
+                    {showNewSite ? (
+                      <div className="px-3 py-2 flex gap-2">
+                        <input
+                          autoFocus
+                          value={newSiteName}
+                          onChange={(e) => setNewSiteName(e.target.value)}
+                          onKeyDown={(e) => { if (e.key === "Enter") createSite(); if (e.key === "Escape") setShowNewSite(false) }}
+                          placeholder="Site name..."
+                          className="flex-1 px-2 py-1 text-sm border border-[var(--border)] rounded-md focus:outline-none focus:border-[var(--accent)]"
+                        />
+                        <button
+                          onClick={createSite}
+                          disabled={!newSiteName.trim() || creating}
+                          className="px-2 py-1 text-xs font-medium bg-[var(--accent)] text-white rounded-md hover:bg-[var(--accent-focus)] disabled:opacity-50 transition-colors"
+                        >
+                          {creating ? <Loader2 className="size-3 animate-spin" /> : "Create"}
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => setShowNewSite(true)}
+                        className="w-full text-left px-3 py-2 text-sm text-[var(--accent)] hover:bg-[var(--accent-subtle)] transition-colors flex items-center gap-2"
+                      >
+                        <Plus className="size-3.5" />
+                        New Site
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+
+          {previewHtml && (
+            <span className="text-[0.55rem] sm:text-[0.6rem] text-green-600 bg-green-50 px-1.5 py-0.5 rounded-full font-medium shrink-0">Live</span>
+          )}
         </div>
 
-        <div className="u-container pb-14 md:pb-20 lg:pb-24">
-          <div className="card-hero-dark px-8 md:px-12 lg:px-16 py-12 md:py-16 lg:py-20">
-            <h2>Everything in one subscription.</h2>
-            <p className="mt-5 md:mt-6">
-              Website, chatbot, Google reviews, and phone answering — one flat monthly fee. No add-ons. No per-feature pricing.
-            </p>
-            <Link href="#services" className="inline-flex items-center gap-2 mt-8 md:mt-10">
-              See what&apos;s included
-              <span aria-hidden="true">→</span>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* What's included — Anthropic Latest releases cards */}
-      <section id="services" className="bg-[#fcfaf8]">
-        <div className="u-container py-16 md:py-24 lg:py-28">
-          <h2 className="text-section-label mb-10 md:mb-14">What&apos;s included</h2>
-          <div className="grid md:grid-cols-3 gap-5 md:gap-6">
-            {featuredServices.map((service) => (
-              <ReleaseCard
-                key={service.id}
-                title={service.title}
-                description={service.desc}
-                meta={[
-                  { label: "Category", value: service.tag },
-                  { label: "Features", value: service.points.join(", ") },
-                ]}
-                href={serviceHrefs[service.id]}
-                cta="Learn more"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Statement + link list — Anthropic bottom split */}
-      <section id="work" className="bg-[#fcfaf8] border-t border-[#dbd9d7]">
-        <div className="u-container py-16 md:py-24 lg:py-28">
-          <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-12 lg:gap-20 items-start">
-            <h2 className="font-sans-ui text-2xl md:text-3xl lg:text-[2rem] font-bold leading-[1.2] tracking-tight text-[#141413] max-w-md">
-              {contact.headline}
-            </h2>
-
-            <div>
-              {listItems.map((item) => (
-                <ListRow key={item.title} title={item.title} category={item.category} href={item.href} />
-              ))}
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <div className="hidden sm:flex items-center gap-2 text-sm text-[var(--text-secondary)]">
+            <div className="size-6 rounded-full bg-[var(--accent)]/10 flex items-center justify-center">
+              <User className="size-3 text-[var(--accent)]" />
             </div>
+            <span className="hidden md:inline">{user.name || user.email}</span>
           </div>
+          <button onClick={handleLogout} className="p-1.5 sm:p-2 lg:p-1.5 rounded-md hover:bg-red-50 text-[var(--text-tertiary)] hover:text-red-600 transition-colors">
+            <LogOut className="size-3.5 sm:size-4 lg:size-3.5" />
+          </button>
         </div>
-      </section>
+      </div>
 
-      {/* Contact */}
-      <section id="contact" className="bg-[#fcfaf8] border-t border-[#dbd9d7]">
-        <div className="u-container py-12 md:py-16">
-          <a href={`mailto:${contact.email}`} className="btn-pill-dark">
-            {contact.email}
-            <span aria-hidden="true">→</span>
-          </a>
-        </div>
-      </section>
-    </main>
+      <div className="flex-1 min-h-0">
+        <SplitLayout
+          leftPanel={
+            <ChatPanel
+              key={currentSite?.slug || "default"}
+              isPreviewOpen={isPreviewOpen}
+              onTogglePreview={() => setIsPreviewOpen((p) => !p)}
+              onToggleChatCollapse={() => setIsChatCollapsed((p) => !p)}
+              isChatCollapsed={isChatCollapsed}
+              onHtmlGenerated={setPreviewHtml}
+              selectedElement={selectedElement}
+              onClearSelection={() => setSelectedElement(null)}
+              siteSlug={currentSite?.slug || "default"}
+            />
+          }
+          rightPanel={
+            <PreviewPanel
+              previewHtml={previewHtml}
+              onHtmlReset={() => setPreviewHtmlState("")}
+              onElementSelected={setSelectedElement}
+              selectedElement={selectedElement}
+              siteSlug={currentSite?.slug || "default"}
+              onBackToChat={() => setIsPreviewOpen(false)}
+            />
+          }
+          leftCollapsed={isChatCollapsed}
+          mobileView={isPreviewOpen ? "right" : "left"}
+        />
+      </div>
+    </div>
   )
 }

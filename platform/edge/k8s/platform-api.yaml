@@ -49,6 +49,17 @@ spec:
             requests:
               cpu: 50m
               memory: 128Mi
+        - name: build-worker
+          image: wps-platform-api:latest
+          imagePullPolicy: IfNotPresent
+          command: ["node", "dist/workers/build-worker.js"]
+          envFrom:
+            - secretRef:
+                name: platform-secrets
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
 ---
 apiVersion: v1
 kind: Service
