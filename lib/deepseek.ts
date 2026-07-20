@@ -20,7 +20,7 @@ export interface ChatMessage {
   content: string
 }
 
-const SYSTEM_PROMPT = `You are an expert AI website builder that generates complete, production-ready multi-page websites in a single HTML file.
+export const BUILDER_SYSTEM_PROMPT = `You are an expert AI website builder that generates complete, production-ready multi-page websites in a single HTML file.
 
 CRITICAL RULES:
 1. ALWAYS output the full HTML document wrapped in \`\`\`html code blocks — start your response directly with the code block, no introductory text before it
@@ -69,7 +69,7 @@ export function buildMessages(
   history: ChatMessage[] = []
 ): ChatMessage[] {
   return [
-    { role: "system", content: SYSTEM_PROMPT },
+    { role: "system", content: BUILDER_SYSTEM_PROMPT },
     ...history,
     { role: "user", content: userMessage },
   ]
