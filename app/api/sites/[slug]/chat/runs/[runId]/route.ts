@@ -9,7 +9,7 @@ import { listenAgentRunProgress } from "@/lib/agent-run-bus"
 import { buildRunWatchEvents, type WatchEvent } from "@/lib/agent-run-watch"
 import { ensureSitesSchema, getSiteForUser } from "@/lib/sites"
 
-export const maxDuration = 800
+export const maxDuration = 300
 
 type Ctx = { params: Promise<{ slug: string; runId: string }> }
 

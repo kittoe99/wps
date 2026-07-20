@@ -11,7 +11,7 @@ import {
 } from "@/lib/agent-chat"
 import { ensureSitesSchema, getSiteForUser } from "@/lib/sites"
 
-export const maxDuration = 800
+export const maxDuration = 300
 
 type Ctx = { params: Promise<{ slug: string }> }
 
