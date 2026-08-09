@@ -7,7 +7,7 @@ import { FormEvent, useState, Suspense } from "react"
 function LoginForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const next = searchParams.get("next") || "/builder"
+  const next = searchParams.get("next") || "/"
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -29,7 +29,7 @@ function LoginForm() {
         setError(data.error || "Sign in failed")
         return
       }
-      router.push(next.startsWith("/") ? next : "/builder")
+      router.push(next.startsWith("/") ? next : "/")
       router.refresh()
     } catch {
       setError("Something went wrong. Try again.")
@@ -101,7 +101,7 @@ export default function LoginPage() {
             Sign <span className="hero-underline">in</span>
           </h1>
           <p className="font-sans-ui text-base text-[#3d3d3a] mt-4 max-w-md mx-auto animate-fade-in-delayed">
-            Access your builder and account tools.
+            Access your account.
           </p>
         </div>
       </section>

@@ -47,7 +47,7 @@ export default function AuthNav({ mobile = false }: { mobile?: boolean }) {
       return (
         <Link
           href="/login"
-          className="flex-1 rounded-lg py-2.5 text-center text-sm font-medium text-neutral-900 border border-neutral-300 hover:bg-white transition-all"
+          className="flex-1 rounded-lg py-2.5 text-center text-sm font-medium text-neutral-900 border border-neutral-300 hover:bg-black/5 transition-all"
         >
           Sign in
         </Link>
@@ -56,7 +56,7 @@ export default function AuthNav({ mobile = false }: { mobile?: boolean }) {
     return (
       <Link
         href="/login"
-        className="text-sm font-medium text-[#d97759] hover:text-[#c46a4f] transition-colors"
+        className="text-sm font-medium text-[#2b7fff] hover:text-[#1e6bf2] transition-colors"
       >
         Sign in
       </Link>
@@ -65,32 +65,18 @@ export default function AuthNav({ mobile = false }: { mobile?: boolean }) {
 
   if (mobile) {
     return (
-      <>
-        <Link
-          href="/builder"
-          className="flex-1 rounded-lg py-2.5 text-center text-sm font-medium text-neutral-900 border border-neutral-300 hover:bg-white transition-all"
-        >
-          Builder
-        </Link>
-        <button
-          type="button"
-          onClick={signOut}
-          className="flex-1 rounded-lg py-2.5 text-center text-sm font-medium text-white bg-neutral-900 hover:bg-neutral-800 transition-all"
-        >
-          Sign out
-        </button>
-      </>
+      <button
+        type="button"
+        onClick={signOut}
+        className="flex-1 rounded-lg py-2.5 text-center text-sm font-medium text-white bg-[#2b7fff] hover:bg-[#1e6bf2] transition-all"
+      >
+        Sign out
+      </button>
     )
   }
 
   return (
     <div className="flex items-center gap-4">
-      <Link
-        href="/builder"
-        className="text-sm font-medium text-[#d97759] hover:text-[#c46a4f] transition-colors"
-      >
-        Builder
-      </Link>
       <button
         type="button"
         onClick={signOut}

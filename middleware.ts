@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server"
 import { jwtVerify } from "jose"
 
 const SESSION_COOKIE = "wps_session"
-const PROTECTED = ["/builder", "/preview"]
+const PROTECTED = ["/preview"]
 
 function getSecret() {
   const secret = process.env.AUTH_SECRET
@@ -39,5 +39,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/builder", "/builder/:path*", "/preview", "/preview/:path*"],
+  matcher: ["/preview", "/preview/:path*"],
 }

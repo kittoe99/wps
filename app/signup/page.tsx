@@ -7,7 +7,7 @@ import { FormEvent, useState, Suspense } from "react"
 function SignupForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const next = searchParams.get("next") || "/builder"
+  const next = searchParams.get("next") || "/"
 
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
@@ -30,7 +30,7 @@ function SignupForm() {
         setError(data.error || "Sign up failed")
         return
       }
-      router.push(next.startsWith("/") ? next : "/builder")
+      router.push(next.startsWith("/") ? next : "/")
       router.refresh()
     } catch {
       setError("Something went wrong. Try again.")
@@ -117,7 +117,7 @@ export default function SignupPage() {
             Create your <span className="hero-underline">account</span>
           </h1>
           <p className="font-sans-ui text-base text-[#3d3d3a] mt-4 max-w-md mx-auto animate-fade-in-delayed">
-            Register to access the site builder.
+            Register to get started.
           </p>
         </div>
       </section>

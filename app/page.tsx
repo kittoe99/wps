@@ -1,295 +1,122 @@
-"use client"
+import Link from "next/link"
+import type { Metadata } from "next"
+import { ArrowUpRight, CalendarCheck, Globe2, Megaphone, PhoneCall, Search, Star } from "lucide-react"
 
-import { useCallback, useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
-import SplitLayout from "@/components/builder/SplitLayout"
-import ChatPanel from "@/components/builder/ChatPanel"
-import PreviewPanel, { type SelectedElement } from "@/components/builder/PreviewPanel"
-import { Loader2, LogOut, User, Plus, ChevronDown, Globe } from "lucide-react"
-
-const CURRENT_SITE_KEY = "wps-current-site"
-
-interface SiteInfo {
-  name: string
-  slug: string
-  createdAt: string
-  updatedAt: string
+export const metadata: Metadata = {
+  title: "More booked jobs. Less chasing. — WPScanvas",
+  description:
+    "WPScanvas turns clicks, calls, and reviews into booked appointments for local service businesses.",
 }
 
-interface ApiSite {
-  slug: string
-  title?: string | null
-  businessName?: string | null
-  createdAt: string
-  updatedAt: string
-}
+const products = [
+  {
+    icon: Globe2,
+    title: "AI Website Builder",
+    copy: "A website built to turn local searches into calls and booked jobs.",
+    href: "/websites",
+  },
+  {
+    icon: PhoneCall,
+    title: "AI Phone Agents",
+    copy: "Answer every call, qualify the job, and book it while you work.",
+    href: "/ai-phone-agent",
+  },
+  {
+    icon: Megaphone,
+    title: "Google Ads Agent",
+    copy: "Keep demand coming with campaigns built around your best jobs.",
+    href: "/contact",
+  },
+  {
+    icon: Star,
+    title: "Review Generation",
+    copy: "Turn great service into the reviews that win the next customer.",
+    href: "/reviews-generator",
+  },
+]
 
-function mapSite(s: ApiSite): SiteInfo {
-  return {
-    name: s.businessName || s.title || s.slug,
-    slug: s.slug,
-    createdAt: s.createdAt,
-    updatedAt: s.updatedAt,
-  }
-}
-
-function slugify(name: string): string {
-  return name
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9-]/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-|-$/g, "")
-}
-
-export default function BuilderPage() {
-  const router = useRouter()
-  const [isPreviewOpen, setIsPreviewOpen] = useState(true)
-  const [isChatCollapsed, setIsChatCollapsed] = useState(false)
-  const [previewHtml, setPreviewHtmlState] = useState("")
-  const [selectedElement, setSelectedElement] = useState<SelectedElement | null>(null)
-  const [user, setUser] = useState<{ name: string; email: string } | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [sites, setSites] = useState<SiteInfo[]>([])
-  const [currentSite, setCurrentSite] = useState<SiteInfo | null>(null)
-  const [showSitePicker, setShowSitePicker] = useState(false)
-  const [showNewSite, setShowNewSite] = useState(false)
-  const [newSiteName, setNewSiteName] = useState("")
-  const [creating, setCreating] = useState(false)
-
-  // Load sites
-  const loadSites = useCallback(async () => {
-    try {
-      const res = await fetch("/api/sites")
-      if (res.ok) {
-        const data = await res.json()
-        const list = (data.sites || []).map(mapSite)
-        setSites(list)
-        return list
-      }
-    } catch {}
-    return []
-  }, [])
-
-  // Restore or create current site
-  useEffect(() => {
-    const init = async () => {
-      const sitesList = await loadSites()
-      const saved = typeof window !== "undefined" ? localStorage.getItem(CURRENT_SITE_KEY) : null
-
-      if (saved) {
-        const found = sitesList.find((s: SiteInfo) => s.slug === saved)
-        if (found) {
-          setCurrentSite(found)
-          // Load preview for this site
-          fetch(`/api/session?site=${found.slug}`)
-            .then((r) => r.json())
-            .then((d) => { if (d.previewHtml) setPreviewHtmlState(d.previewHtml) })
-            .catch(() => {})
-          return
-        }
-      }
-
-      if (sitesList.length > 0) {
-        setCurrentSite(sitesList[0])
-        localStorage.setItem(CURRENT_SITE_KEY, sitesList[0].slug)
-        fetch(`/api/session?site=${sitesList[0].slug}`)
-          .then((r) => r.json())
-          .then((d) => { if (d.previewHtml) setPreviewHtmlState(d.previewHtml) })
-          .catch(() => {})
-      }
-    }
-    init()
-  }, [loadSites])
-
-  const setPreviewHtml = useCallback((html: string) => {
-    setPreviewHtmlState(html)
-  }, [])
-
-  // Auth check
-  useEffect(() => {
-    fetch("/api/auth/me")
-      .then((r) => r.json())
-      .then((d) => { if (!d.user) router.replace("/login"); else setUser(d.user) })
-      .catch(() => router.replace("/login"))
-      .finally(() => setLoading(false))
-  }, [router])
-
-  const switchSite = async (site: SiteInfo) => {
-    setCurrentSite(site)
-    setShowSitePicker(false)
-    localStorage.setItem(CURRENT_SITE_KEY, site.slug)
-    setPreviewHtmlState("")
-
-    // Load site preview
-    fetch(`/api/session?site=${site.slug}`)
-      .then((r) => r.json())
-      .then((d) => { if (d.previewHtml) setPreviewHtmlState(d.previewHtml) })
-      .catch(() => {})
-  }
-
-  const createSite = async () => {
-    if (!newSiteName.trim() || creating) return
-    setCreating(true)
-    try {
-      const res = await fetch("/api/sites", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slug: slugify(newSiteName.trim()), title: newSiteName.trim() }),
-      })
-      if (!res.ok) {
-        const err = await res.json()
-        throw new Error(err.error)
-      }
-      const data = await res.json()
-      const newSite = mapSite(data.site)
-      setSites((prev) => [newSite, ...prev])
-      setNewSiteName("")
-      setShowNewSite(false)
-      await switchSite(newSite)
-    } catch (err) {
-      alert(err instanceof Error ? err.message : "Failed to create site")
-    } finally {
-      setCreating(false)
-    }
-  }
-
-  const handleLogout = async () => {
-    await fetch("/api/auth/me", { method: "POST" })
-    try { localStorage.clear() } catch {}
-    router.replace("/login")
-  }
-
-  if (loading) {
-    return <div className="h-screen flex items-center justify-center bg-[#fcfbfa]"><Loader2 className="size-6 animate-spin text-[var(--accent)]" /></div>
-  }
-  if (!user) return null
-
+export default function HomePage() {
   return (
-    <div className="h-screen flex flex-col">
-      <div className="flex items-center justify-between px-3 sm:px-4 py-1.5 sm:py-2 border-b border-[var(--border)] bg-white shrink-0">
-        <div className="flex items-center gap-2 min-w-0 flex-1">
-          <div className="size-5 sm:size-6 rounded-md bg-[var(--accent)]/10 flex items-center justify-center shrink-0">
-            <span className="text-[0.6rem] sm:text-xs font-bold text-[var(--accent)]">W</span>
-          </div>
-
-          {/* Site selector */}
-          <div className="relative min-w-0 flex-1">
-            <button
-              onClick={() => setShowSitePicker(!showSitePicker)}
-              className="flex items-center gap-1 px-1.5 sm:px-2 py-1 rounded-md hover:bg-[var(--panel-hover)] transition-colors max-w-full"
-            >
-              <span className="text-xs sm:text-sm font-semibold text-[var(--text-primary)] truncate">
-                {currentSite?.name || "No site"}
-              </span>
-              <ChevronDown className="size-2.5 sm:size-3 text-[var(--text-tertiary)] shrink-0" />
-            </button>
-
-            {showSitePicker && (
-              <>
-                <div className="fixed inset-0 z-10" onClick={() => setShowSitePicker(false)} />
-                <div className="absolute top-full left-0 mt-1 w-64 max-w-[calc(100vw-2rem)] bg-white rounded-lg border border-[var(--border)] shadow-lg z-20 py-1">
-                  <div className="px-3 py-1.5 text-[0.65rem] font-medium text-[var(--text-tertiary)] uppercase tracking-wider">
-                    Your Sites
-                  </div>
-                  {sites.map((s) => (
-                    <button
-                      key={s.slug}
-                      onClick={() => switchSite(s)}
-                      className={`w-full text-left px-3 py-2 text-sm transition-colors flex items-center gap-2 ${
-                        currentSite?.slug === s.slug
-                          ? "bg-[var(--accent-subtle)] text-[var(--accent)]"
-                          : "text-[var(--text-secondary)] hover:bg-[var(--panel-hover)]"
-                      }`}
-                    >
-                      <Globe className="size-3.5 shrink-0" />
-                      <span className="truncate">{s.name}</span>
-                      {currentSite?.slug === s.slug && (
-                        <span className="ml-auto text-[0.6rem] text-[var(--accent)]">active</span>
-                      )}
-                    </button>
-                  ))}
-                  <div className="border-t border-[var(--border)] mt-1 pt-1">
-                    {showNewSite ? (
-                      <div className="px-3 py-2 flex gap-2">
-                        <input
-                          autoFocus
-                          value={newSiteName}
-                          onChange={(e) => setNewSiteName(e.target.value)}
-                          onKeyDown={(e) => { if (e.key === "Enter") createSite(); if (e.key === "Escape") setShowNewSite(false) }}
-                          placeholder="Site name..."
-                          className="flex-1 px-2 py-1 text-sm border border-[var(--border)] rounded-md focus:outline-none focus:border-[var(--accent)]"
-                        />
-                        <button
-                          onClick={createSite}
-                          disabled={!newSiteName.trim() || creating}
-                          className="px-2 py-1 text-xs font-medium bg-[var(--accent)] text-white rounded-md hover:bg-[var(--accent-focus)] disabled:opacity-50 transition-colors"
-                        >
-                          {creating ? <Loader2 className="size-3 animate-spin" /> : "Create"}
-                        </button>
-                      </div>
-                    ) : (
-                      <button
-                        onClick={() => setShowNewSite(true)}
-                        className="w-full text-left px-3 py-2 text-sm text-[var(--accent)] hover:bg-[var(--accent-subtle)] transition-colors flex items-center gap-2"
-                      >
-                        <Plus className="size-3.5" />
-                        New Site
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
-
-          {previewHtml && (
-            <span className="text-[0.55rem] sm:text-[0.6rem] text-green-600 bg-green-50 px-1.5 py-0.5 rounded-full font-medium shrink-0">Live</span>
-          )}
-        </div>
-
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-          <div className="hidden sm:flex items-center gap-2 text-sm text-[var(--text-secondary)]">
-            <div className="size-6 rounded-full bg-[var(--accent)]/10 flex items-center justify-center">
-              <User className="size-3 text-[var(--accent)]" />
+    <main className="growth-page">
+      <section className="growth-hero">
+        <div className="growth-orb growth-orb-one" aria-hidden="true" />
+        <div className="growth-orb growth-orb-two" aria-hidden="true" />
+        <div className="growth-shell growth-hero-inner">
+          <div className="growth-hero-copy">
+            <p className="growth-kicker"><span /> Built for local businesses ready to grow</p>
+            <h1>More booked jobs.<br /><em>On autopilot.</em></h1>
+            <p className="growth-lede">
+              WPScanvas puts your lead generation, call handling, and follow-up on one intelligent system—so more inquiries become appointments.
+            </p>
+            <div className="growth-actions">
+              <Link href="/contact" className="growth-button growth-button-dark">Get more appointments <ArrowUpRight size={17} /></Link>
+              <Link href="#products" className="growth-text-link">Explore the system <span>↓</span></Link>
             </div>
-            <span className="hidden md:inline">{user.name || user.email}</span>
+            <p className="growth-note">For home services, clinics, local pros, and ambitious small businesses.</p>
           </div>
-          <button onClick={handleLogout} className="p-1.5 sm:p-2 lg:p-1.5 rounded-md hover:bg-red-50 text-[var(--text-tertiary)] hover:text-red-600 transition-colors">
-            <LogOut className="size-3.5 sm:size-4 lg:size-3.5" />
-          </button>
-        </div>
-      </div>
 
-      <div className="flex-1 min-h-0">
-        <SplitLayout
-          leftPanel={
-            <ChatPanel
-              key={currentSite?.slug || "default"}
-              isPreviewOpen={isPreviewOpen}
-              onTogglePreview={() => setIsPreviewOpen((p) => !p)}
-              onToggleChatCollapse={() => setIsChatCollapsed((p) => !p)}
-              isChatCollapsed={isChatCollapsed}
-              onHtmlGenerated={setPreviewHtml}
-              selectedElement={selectedElement}
-              onClearSelection={() => setSelectedElement(null)}
-              siteSlug={currentSite?.slug || "default"}
-            />
-          }
-          rightPanel={
-            <PreviewPanel
-              previewHtml={previewHtml}
-              onHtmlReset={() => setPreviewHtmlState("")}
-              onElementSelected={setSelectedElement}
-              selectedElement={selectedElement}
-              siteSlug={currentSite?.slug || "default"}
-              onBackToChat={() => setIsPreviewOpen(false)}
-            />
-          }
-          leftCollapsed={isChatCollapsed}
-          mobileView={isPreviewOpen ? "right" : "left"}
-        />
-      </div>
-    </div>
+          <div className="growth-console" aria-label="Illustration of the WPScanvas appointment engine">
+            <div className="growth-console-top"><span className="growth-live-dot" /> APPOINTMENT ENGINE <span>LIVE</span></div>
+            <div className="growth-console-main">
+              <div className="growth-console-label">This week</div>
+              <div className="growth-console-metric">New jobs, handled.</div>
+              <div className="growth-stream">
+                <div className="growth-stream-card"><i className="growth-icon"><Globe2 size={15} /></i><div><b>Website lead</b><small>Estimate requested</small></div><strong>Qualified</strong></div>
+                <div className="growth-stream-card"><i className="growth-icon"><Search size={15} /></i><div><b>Google Ads lead</b><small>Plumbing service</small></div><strong>Booked</strong></div>
+                <div className="growth-stream-card"><i className="growth-icon"><PhoneCall size={15} /></i><div><b>Phone call</b><small>Emergency repair</small></div><strong>Booked</strong></div>
+              </div>
+              <div className="growth-console-footer"><span>Response time</span><b>Instant</b><span>Follow-up</span><b>Automatic</b></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="growth-intro">
+        <div className="growth-shell">
+          <p className="growth-kicker">Growth doesn&apos;t need more tools</p>
+          <h2>It needs one system that never lets a good lead go cold.</h2>
+          <div className="growth-intro-grid">
+            <p>Marketing brings in attention. WPScanvas turns it into the calls, conversations, and appointments that move your business forward.</p>
+            <Link href="/contact" className="growth-text-link">Build your growth engine <span>↗</span></Link>
+          </div>
+        </div>
+      </section>
+
+      <section id="products" className="growth-products">
+        <div className="growth-shell">
+          <div className="growth-section-head"><p className="growth-kicker">One connected growth engine</p><p>Every part works toward the same outcome: a fuller calendar.</p></div>
+          <div className="growth-product-grid">
+            {products.map((product) => (
+              <Link href={product.href} key={product.title} className="growth-product-card">
+                <span className="growth-product-icon"><product.icon size={22} strokeWidth={1.5} /></span>
+                <div><h3>{product.title}</h3><p>{product.copy}</p></div>
+                <span className="growth-product-arrow">↗</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="growth-outcome">
+        <div className="growth-shell growth-outcome-grid">
+          <div><p className="growth-kicker">Designed to convert</p><h2>Be the business that answers first.</h2></div>
+          <div className="growth-outcome-list">
+            <p><span><Search size={17} /></span> Get found when buyers are looking.</p>
+            <p><span><PhoneCall size={17} /></span> Respond while intent is highest.</p>
+            <p><span><CalendarCheck size={17} /></span> Book the appointment without the back-and-forth.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="growth-cta">
+        <div className="growth-shell">
+          <div className="growth-cta-panel">
+            <p className="growth-kicker">Your next customer is already searching</p>
+            <h2>Let&apos;s put your appointments on autopilot.</h2>
+            <Link href="/contact" className="growth-button growth-button-light">Talk to WPScanvas <span>↗</span></Link>
+          </div>
+        </div>
+      </section>
+    </main>
   )
 }
