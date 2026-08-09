@@ -2,6 +2,7 @@
 
 import { FormEvent, KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import Link from "next/link"
+import { ArrowUpRight } from "lucide-react"
 
 type Site = {
   id: string
@@ -1011,7 +1012,7 @@ export default function BuilderWorkspace({
                   rel="noreferrer"
                   className="font-sans-ui text-xs text-[#d97759] hover:text-[#c46a4f] shrink-0"
                 >
-                  {selected.publicUrl.replace("https://", "")} ↗
+                  {selected.publicUrl.replace("https://", "")} <ArrowUpRight size={12} className="inline-block" />
                 </a>
               </header>
 
@@ -1258,7 +1259,7 @@ export default function BuilderWorkspace({
                             rel="noreferrer"
                             className="rounded-lg px-3 py-1.5 text-xs font-medium text-white bg-[#d97759] hover:bg-[#c46a4f]"
                           >
-                            Open ↗
+                            Open <ArrowUpRight size={12} className="inline-block" />
                           </a>
                         </div>
                       </div>

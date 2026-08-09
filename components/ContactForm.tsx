@@ -1,6 +1,7 @@
 "use client"
 
 import { FormEvent, useState } from "react"
+import { ArrowRight } from "lucide-react"
 
 type FormState = "idle" | "submitting" | "success" | "error"
 
@@ -120,7 +121,7 @@ export default function ContactForm() {
 
       <button type="submit" className="btn-pill-dark" disabled={state === "submitting"}>
         {state === "submitting" ? "Sending..." : "Send message"}
-        {state !== "submitting" && <span aria-hidden="true">→</span>}
+        {state !== "submitting" && <span aria-hidden="true"><ArrowRight size={14} /></span>}
       </button>
     </form>
   )

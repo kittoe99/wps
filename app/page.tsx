@@ -77,7 +77,7 @@ export default function HomePage() {
           <h2>It needs one system that never lets a good lead go cold.</h2>
           <div className="growth-intro-grid">
             <p>Marketing brings in attention. WPScanvas turns it into the calls, conversations, and appointments that move your business forward.</p>
-            <Link href="/contact" className="growth-text-link">Build your growth engine <span>↗</span></Link>
+            <Link href="/contact" className="growth-text-link">Build your growth engine <span aria-hidden="true"><ArrowUpRight size={16} /></span></Link>
           </div>
         </div>
       </section>
@@ -90,7 +90,7 @@ export default function HomePage() {
               <Link href={product.href} key={product.title} className="growth-product-card">
                 <span className="growth-product-icon"><product.icon size={22} strokeWidth={1.5} /></span>
                 <div><h3>{product.title}</h3><p>{product.copy}</p></div>
-                <span className="growth-product-arrow">↗</span>
+                <span className="growth-product-arrow"><ArrowUpRight size={19} /></span>
               </Link>
             ))}
           </div>
@@ -113,7 +113,7 @@ export default function HomePage() {
           <div className="growth-cta-panel">
             <p className="growth-kicker">Your next customer is already searching</p>
             <h2>Let&apos;s put your appointments on autopilot.</h2>
-            <Link href="/contact" className="growth-button growth-button-light">Talk to WPScanvas <span>↗</span></Link>
+            <Link href="/contact" className="growth-button growth-button-light">Talk to WPScanvas <span aria-hidden="true"><ArrowUpRight size={17} /></span></Link>
           </div>
         </div>
       </section>

@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useState } from "react"
+import { ArrowRight } from "lucide-react"
 
 type Product = {
   id: string
@@ -164,7 +165,7 @@ export default function ProductTabs() {
             ))}
           </ul>
           <Link href="/contact" className="el-btn-primary mt-9">
-            Build this engine <span aria-hidden="true">→</span>
+            Build this engine <span aria-hidden="true"><ArrowRight size={16} /></span>
           </Link>
         </div>
         <div className="el-panel-inset p-5 md:p-7">
