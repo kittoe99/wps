@@ -11,6 +11,7 @@ type Site = {
   businessName: string | null
   industry: string | null
   tone: string | null
+  onboardingStatus?: "draft" | "ready"
   status: "draft" | "building" | "live" | "failed"
   currentVersion: number | null
   publicUrl: string
@@ -930,6 +931,14 @@ export default function BuilderWorkspace({
                         {site.slug}.wpscanvas.com
                       </span>
                     </button>
+                    {site.onboardingStatus === "draft" && (
+                      <Link
+                        href={`/builder/onboarding?site=${encodeURIComponent(site.slug)}`}
+                        className="mt-1 block px-3 font-sans-ui text-[11px] font-medium text-[#748b00] hover:text-[#526300]"
+                      >
+                        Resume onboarding →
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -943,6 +952,15 @@ export default function BuilderWorkspace({
             <h3 className="font-sans-ui text-sm font-semibold text-[#141413]">
               New website
             </h3>
+            <Link
+              href="/builder/onboarding"
+              className="block rounded-xl bg-neutral-900 px-3 py-2.5 text-center font-sans-ui text-sm font-medium text-white hover:bg-neutral-800"
+            >
+              Start guided onboarding
+            </Link>
+            <p className="font-sans-ui text-[11px] text-[#6b6b6b] text-center">
+              Or create a blank draft below
+            </p>
             <input
               required
               value={newSlug}

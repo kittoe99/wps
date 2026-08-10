@@ -57,3 +57,7 @@ next-env.d.ts
 .sandbox/
 native/**/build/
 packages/**/node_modules/
+
+# local dev artifacts
+dev-server.*.log
+/workspaces/

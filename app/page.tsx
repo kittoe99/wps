@@ -1,6 +1,7 @@
 import Link from "next/link"
 import type { Metadata } from "next"
 import { ArrowUpRight, CalendarCheck, Globe2, Megaphone, PhoneCall, Search, Star } from "lucide-react"
+import ConnectedSystemIllustration from "@/components/ConnectedSystemIllustration"
 
 export const metadata: Metadata = {
   title: "More booked jobs. Less chasing. — WPScanvas",
@@ -79,6 +80,7 @@ export default function HomePage() {
             <p>Marketing brings in attention. WPScanvas turns it into the calls, conversations, and appointments that move your business forward.</p>
             <Link href="/contact" className="growth-text-link">Build your growth engine <span aria-hidden="true"><ArrowUpRight size={16} /></span></Link>
           </div>
+          <ConnectedSystemIllustration />
         </div>
       </section>
 

@@ -1,0 +1,7 @@
+export type OnboardingBrief = {
+  businessDescription: string; businessType: string; locations: string[]; serviceAreas: string[]; serviceCoverage: string; primaryMarket: string; marketState: string; marketCity: string; businessAddress: string; travelRange: string; primaryServices: string[]; idealCustomers: string; differentiators: string; offers: string; primaryGoal: string; primaryCta: string; brandTone: string; visualDirection: string; brandColors: string; proof: string; copyNotes: string; assetUrls: string[]; publicEmail: string; publicPhone: string; leadRecipient: string; bookingUrl: string; crmOrScheduling: string; currentWebsiteUrl: string; googleBusinessUrl: string; socialUrls: string[]; competitorUrls: string[]; inspirationUrls: string[]; targetKeywords: string[]
+}
+
+export const emptyOnboardingBrief: OnboardingBrief = {
+  businessDescription: "", businessType: "", locations: [], serviceAreas: [], serviceCoverage: "", primaryMarket: "", marketState: "", marketCity: "", businessAddress: "", travelRange: "", primaryServices: [], idealCustomers: "", differentiators: "", offers: "", primaryGoal: "", primaryCta: "", brandTone: "", visualDirection: "", brandColors: "", proof: "", copyNotes: "", assetUrls: [], publicEmail: "", publicPhone: "", leadRecipient: "", bookingUrl: "", crmOrScheduling: "", currentWebsiteUrl: "", googleBusinessUrl: "", socialUrls: [], competitorUrls: [], inspirationUrls: [], targetKeywords: [],
+}

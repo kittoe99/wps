@@ -1,5 +1,7 @@
 import { getPool } from "@/lib/db"
 import type { AuthUser } from "@/lib/auth"
+import { emptyOnboardingBrief, type OnboardingBrief } from "@/lib/onboarding"
+export { emptyOnboardingBrief, type OnboardingBrief } from "@/lib/onboarding"
 
 export type UserSite = {
   id: string
@@ -9,6 +11,8 @@ export type UserSite = {
   businessName: string | null
   industry: string | null
   tone: string | null
+  onboardingStatus?: "draft" | "ready"
+  onboardingBrief?: OnboardingBrief
   status: "draft" | "building" | "live" | "failed"
   currentVersion: number | null
   agentSessionId: string | null
@@ -105,6 +109,8 @@ function mapSite(row: Record<string, unknown>): UserSite {
     businessName: (row.business_name as string) ?? null,
     industry: (row.industry as string) ?? null,
     tone: (row.tone as string) ?? null,
+    onboardingStatus: row.onboarding_status === "ready" ? "ready" : "draft",
+    onboardingBrief: { ...emptyOnboardingBrief, ...((row.onboarding_brief as Partial<OnboardingBrief>) || {}) },
     status: row.status as UserSite["status"],
     currentVersion: row.current_version as number | null,
     agentSessionId: (row.agent_session_id as string) ?? null,
@@ -221,6 +227,21 @@ export async function updateSiteBrief(
       brief.tone?.trim() || null,
       brief.title?.trim() || null,
     ]
+  )
+  return rows[0] ? mapSite(rows[0]) : null
+}
+
+export async function updateSiteOnboarding(
+  userId: string,
+  slug: string,
+  input: { businessName: string; industry: string; title?: string; brief: OnboardingBrief; status: "draft" | "ready" }
+) {
+  const pool = getPool()
+  const { rows } = await pool.query(
+    `UPDATE user_sites SET business_name = $3, industry = $4, title = COALESCE($5, title),
+       tone = $6, onboarding_brief = $7, onboarding_status = $8, updated_at = NOW()
+     WHERE user_id = $1 AND slug = $2 RETURNING *`,
+    [userId, slug.toLowerCase(), input.businessName.trim(), input.industry.trim(), input.title?.trim() || null, input.brief.brandTone || null, JSON.stringify(input.brief), input.status]
   )
   return rows[0] ? mapSite(rows[0]) : null
 }

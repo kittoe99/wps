@@ -91,6 +91,13 @@ await client.query(`
 `)
 
 await client.query(`
+  ALTER TABLE user_sites
+  ADD COLUMN IF NOT EXISTS onboarding_brief JSONB NOT NULL DEFAULT '{}',
+  ADD COLUMN IF NOT EXISTS onboarding_status TEXT NOT NULL DEFAULT 'draft'
+    CHECK (onboarding_status IN ('draft', 'ready'))
+`)
+
+await client.query(`
   CREATE INDEX IF NOT EXISTS idx_user_sites_user
   ON user_sites (user_id, updated_at DESC)
 `)
